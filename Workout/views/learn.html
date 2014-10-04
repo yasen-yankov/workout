@@ -1,0 +1,9 @@
+<div data-role="view" data-title="Workouts" data-layout="main" data-model="app.models.learn">
+  <ul data-role="listview" data-style="inset" data-template="workoutsTemplate" data-bind="source: ds"></ul>
+</div>
+
+<!-- this is the template used by the listview. template items are automatically
+     wrapped in an <li> by Kendo UI Mobile -->
+<script type="text/x-kendo-template" id="workoutsTemplate">
+  <a data-bind="click: workoutSelected">#: data.name #</a>
+</script>
