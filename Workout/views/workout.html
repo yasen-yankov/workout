@@ -1,8 +1,17 @@
-<div data-role="view" data-layout="main">
+<div data-role="view" data-layout="main" data-show="app.models.workout.show">
     <header data-role="header">
         <div data-role="navbar">
-            Activity
+            <span data-bind="source: Name"></span>
             <a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton">Back</a>
         </div>
     </header>
+    
+    <p data-bind="text: Description">
+    </p>
+    
+    <ul data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
 </div>
+
+<script type="text/x-kendo-template" id="exercisesTemplate">
+  #: data.Name #
+</script>
