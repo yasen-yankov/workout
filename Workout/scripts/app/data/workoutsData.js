@@ -2,12 +2,6 @@ var app = app || {};
 app.data = app.data || {};
 
 app.data.workouts = (function () {
-
-    var workoutModel = {
-        SortExercisesByOrder: function () {
-            
-        },
-    };
     
     var typeName = 'Workouts';
 

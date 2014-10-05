@@ -13,5 +13,8 @@
 </div>
 
 <script type="text/x-kendo-template" id="exercisesTemplate">
-  #: data.Name #
+    <div>
+        <img src="#: app.data.files.resolvePictureUrl(data.Image) #" />
+        #: data.Name #
+    </div>
 </script>
