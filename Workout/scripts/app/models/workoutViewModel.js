@@ -10,6 +10,8 @@ app.models.workout = (function () {
             workoutUid = e.view.params.uid;
 
             workout = app.data.workouts.getByUid(workoutUid);
+            
+            workout.Exercises = app.extensions.exercise.setDefaultSVGImages(workout.Exercises);
 
             workout = app.extensions.workout.sortExercisesByOrder(workout);
             

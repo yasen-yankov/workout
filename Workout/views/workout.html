@@ -1,20 +1,22 @@
-<div data-role="view" data-layout="main" data-show="app.models.workout.show">
+<div data-role="view" data-layout="no-footer" data-show="app.models.workout.show">
     <header data-role="header">
         <div data-role="navbar">
             <span data-bind="source: Name"></span>
             <a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton">Back</a>
         </div>
+        <p class="description" data-bind="text: Description">
+        </p>
+        <a data-role="button" class="startWorkoutBtn" data-icon="play">Start workout</a>
     </header>
     
-    <p data-bind="text: Description">
-    </p>
-    
-    <ul data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
+    <div data-role="scroller">
+        <ul class="exerciseList" data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
+    </div>
 </div>
 
 <script type="text/x-kendo-template" id="exercisesTemplate">
-    <div>
-        #= data.SVGImage #
-        #: data.Name #
-    </div>
+    <li>
+        <div class="exerciseImage">#= data.SVGImage #</div>
+        <span>#: data.Name #</span>
+    </li>
 </script>

@@ -4,7 +4,50 @@ body, html {
     width: 100%;
 }
 
+.workouts-list {
+    list-style-type: none;
+    padding: 0 1em;
+}
+
+.workouts-list li {
+    display: block;
+    margin: 1em 0;
+}
+
+.workouts-list li a {
+    display: block;
+    text-align: left;
+}
+
+.description {
+    margin: 1em;
+}
+
+.startWorkoutBtn {
+    display: block;
+}
+
+.exerciseList {
+    list-style-type: none;
+}
+
+.exerciseList li {
+    height: 74px;
+    padding: 10px 0;
+    border-bottom: 1px solid #10c4b2;
+}
+
+.exerciseList li .exerciseImage {
+    display: inline-block;
+    width: 48px;
+    height: 54px;
+}
+
 /* COMMON STYLES*/
+.fl {
+    float: left;
+}
+
 .view-content h1 {
     color: #42454a;
     font-size: 1.8em;

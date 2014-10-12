@@ -2,7 +2,6 @@ var app = app || {};
 app.extensions = app.extensions || {};
 
 app.extensions.workout = (function () {
-    
     return {
         sortExercisesByOrder: function(workout) {
             var exercisesOrdered = workout.Exercises.slice();

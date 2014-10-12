@@ -1,9 +1,9 @@
 <div data-role="view" data-title="Learn" data-layout="main" data-model="app.models.learn">
-  <ul data-template="workoutsTemplate" data-bind="source: ds"></ul>
+  <ul class="workouts-list" data-template="workoutsTemplate" data-bind="source: ds"></ul>
 </div>
 
 <script type="text/x-kendo-template" id="workoutsTemplate">
     <li>
-        <a data-bind="click: workoutSelected">#: data.Name #</a>
+        <a data-role="button" data-icon="details" data-bind="click: workoutSelected">#: data.Name #</a>
     </li>
 </script>
