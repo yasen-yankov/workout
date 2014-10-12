@@ -4,6 +4,26 @@ body, html {
     width: 100%;
 }
 
+#settings-list {
+    list-style-type: none;
+    padding: 0 1em;
+}
+
+#settings-list li {
+    display: block;
+    margin: 1em 0;
+}
+
+#settings-list li a {
+    display: block;
+    text-align: left;
+}
+
+#modalview-update #download {
+    display: block;
+    margin: 1em;
+}
+
 .workouts-list {
     list-style-type: none;
     padding: 0 1em;
@@ -83,6 +103,19 @@ body, html {
     width: 319px;
     height: 60px;
     margin: 40px auto;
+}
+
+/* BUTTON ICONS*/
+.km-cancel:after,
+.km-cancel:before
+{
+    content: "\e038";
+}
+
+.km-download:after,
+.km-download:before
+{
+    content: "\e0f2";
 }
 
 /* BUTTON STYLES*/

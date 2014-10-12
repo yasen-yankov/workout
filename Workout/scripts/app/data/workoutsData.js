@@ -22,8 +22,26 @@ app.data.workouts = (function () {
         }
     };
 
+    var update = function (lastUpdateItem, updateItem) {
+        var query = new Everlive.Query();
+
+        if (typeof (lastUpdateItem.ToDate) != 'undefined') {
+            query.where().gt('ModifiedAt', lastUpdateItem.ToDate)
+        }
+
+        query.where().lt('ModifiedAt', updateItem.ToDate).done();
+
+        app.everlive.data(typeName).get(query)
+            .then(function (data) {
+            });
+    };
+
     document.addEventListener('appInitialized', function () {
         init();
+    }, false);
+
+    document.addEventListener('contentUpdate', function (e) {
+        update(e.detail.lastUpdateItem, e.detail.updateItem);
     }, false);
 
     return workoutsDataSource;

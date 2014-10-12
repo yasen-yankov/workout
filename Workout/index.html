@@ -10,6 +10,7 @@
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
     <script src="scripts/lib/everlive.all.min.js"></script>
+    <script src="scripts/app/extensions/arrayExtensions.js"></script>
     <script src="scripts/app/settings.js"></script>
     <script src="scripts/app/app.js"></script>
     <script src="scripts/app/updater.js"></script>
@@ -18,6 +19,7 @@
     <script src="scripts/app/data/exercisesData.js"></script>
     <script src="scripts/app/extensions/exerciseExtensions.js"></script>
     <script src="scripts/app/extensions/workoutExtensions.js"></script>
+    <script src="scripts/app/models/settingsViewModel.js"></script>
     <script src="scripts/app/models/learnViewModel.js"></script>
     <script src="scripts/app/models/workoutViewModel.js"></script>
 </head>
@@ -45,6 +47,25 @@
             </div>
         </div>
         <!-- application views will be rendered here -->
+    </div>
+    
+    <div data-role="modalview" id="modalview-update" style="width: 90%;">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span>Content Update</span>
+                <a data-bind="click: cancel" data-align="right" class="nav-button nav-button-add hide-text" type="button" data-role="button" data-icon="cancel"></a>
+            </div>
+        </div>
+        <p>
+            There is a new content update for workouts and exercises.
+        </p>
+        <p>
+            Current version: <span data-bind="text: lastUpdateItem.Version"></span>
+        </p>
+        <p>
+            New version: <span data-bind="text: updateItem.Version"></span>
+        </p>
+        <a id="download" data-bind="click: download" type="button" data-role="button">Download</a>
     </div>
 </body>
 
