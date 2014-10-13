@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Settings" data-layout="no-footer" data-model="app.models.settings">
+<div data-role="view" data-title="Settings" data-layout="no-footer" data-model="app.models.settings" data-init="app.models.settings.init">
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
@@ -8,7 +8,7 @@
     
     <ul id="settings-list">
         <li>
-            <a type="button" data-role="button" data-icon="download" data-badge="!" data-bind="click: downloadUpdate">Download update</a>
+            <a id="content-update" type="button" data-bind="click: downloadUpdate"></a>
         </li>
     </ul>
 </div>

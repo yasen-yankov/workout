@@ -2,6 +2,7 @@ var app = app || {};
 
 app.updater = (function () {
     var typeName = "Updates",
+        pendingUpdate = false,
         lastUpdateItemKey = "lastUpdateItemKey",
         lastUpdateItem = JSON.parse(localStorage.getItem(lastUpdateItemKey)) || { Version: 0 },
         modalUpdateView = $("#modalview-update"),
@@ -37,6 +38,7 @@ app.updater = (function () {
         },
         cancel: function (e) {
             document.dispatchEvent(appInitializedEvent);
+            app.updater.pendingUpdate = true;
             $("#modalview-update").kendoMobileModalView("close");
         }
     }
@@ -60,11 +62,14 @@ app.updater = (function () {
         localStorage.setItem(lastUpdateItemKey, JSON.stringify(updateItem));
 
         document.dispatchEvent(appInitializedEvent);
+        
+        app.updater.pendingUpdate = false;
     }
 
     checkForUpdate();
     
     return {
-        checkForUpdate: checkForUpdate
+        checkForUpdate: checkForUpdate,
+        pendingUpdate: pendingUpdate
     };
 }());

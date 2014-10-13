@@ -5,6 +5,10 @@ app.models.workout = (function () {
     var workoutViewModel = (function () {
         var workoutUid,
             workout;
+        
+        var init = function (e) {
+
+        };
 
         var show = function (e) {
             workoutUid = e.view.params.uid;
@@ -19,6 +23,7 @@ app.models.workout = (function () {
         };
 
         return {
+            init: init,
             show: show,
             workout: workout
         }
