@@ -4,11 +4,17 @@ app.models = app.models || {};
 app.models.learn = (function () {
     var learnViewModel = {
         title: 'Learn',
-        ds: app.data.workouts,
+        workoutsDataSource: app.data.workouts,
         workoutSelected: function (e) {
             app.mobileApp.navigate('views/workout.html?uid=' + e.data.uid, "slide");
         }
     }
-    
-    return learnViewModel;
+
+    init = function (e) {
+        kendo.bind(e.view.element, learnViewModel, kendo.mobile.ui);
+    };
+
+    return {
+        init: init
+    };
 }());

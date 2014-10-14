@@ -7,12 +7,21 @@ var app = (function (window) {
         apiKey: appSettings.everlive.apiKey,
         scheme: appSettings.everlive.scheme
     });
-
-    var mobileApp = new kendo.mobile.Application(document.body, {
+    
+    var mobileAppSettings = {
         transition: 'fade',
         skin: 'flat',
         initial: 'views/startWorkout.html'
-    });
+    };
+    
+    var devicePlatform = device.platform;
+    
+    if (devicePlatform == "Android") {
+        mobileAppSettings.useNativeScrolling = true;
+        mobileAppSettings.transition = "none";
+    }
+    
+    var mobileApp = new kendo.mobile.Application(document.body, mobileAppSettings);
 
     return {
         mobileApp: mobileApp,

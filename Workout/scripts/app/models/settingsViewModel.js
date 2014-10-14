@@ -7,7 +7,7 @@ app.models.settings = (function () {
         app.updater.checkForUpdate();
     };
 
-    var initContentUpdateButton = function () {
+    var showContentUpdateButton = function () {
         var contentUpdateButton = $("#content-update"),
             iconName = app.updater.pendingUpdate ? "download" : "check",
             text = app.updater.pendingUpdate ? "Download update" : "Version is up to date",
@@ -20,12 +20,12 @@ app.models.settings = (function () {
         contentUpdateButton.kendoMobileButton();
     };
 
-    var init = function (e) {
-        initContentUpdateButton();
+    var show = function (e) {
+        showContentUpdateButton();
     }
 
     return {
         downloadUpdate: downloadUpdate,
-        init: init
+        show: show
     };
 }());

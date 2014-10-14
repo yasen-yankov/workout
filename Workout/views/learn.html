@@ -1,5 +1,5 @@
-<div data-role="view" data-title="Learn" data-layout="main" data-model="app.models.learn">
-  <ul class="workouts-list" data-template="workoutsTemplate" data-bind="source: ds"></ul>
+<div data-role="view" data-title="Learn" data-layout="main" data-init="app.models.learn.init">
+  <ul id="workouts-list" class="workouts-list" data-template="workoutsTemplate" data-bind="source: workoutsDataSource"></ul>
 </div>
 
 <script type="text/x-kendo-template" id="workoutsTemplate">

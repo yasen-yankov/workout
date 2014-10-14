@@ -4,6 +4,15 @@ body, html {
     width: 100%;
 }
 
+.btn {
+    padding: .5em .8em;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    background: #DCDCDC;
+    border-color: #DCDCDC;
+}
+
 #settings-list {
     list-style-type: none;
     padding: 0 1em;
@@ -60,7 +69,7 @@ body, html {
 .exerciseList li .exerciseImage {
     display: inline-block;
     width: 48px;
-    height: 54px;
+    height: 56px;
 }
 
 /* COMMON STYLES*/

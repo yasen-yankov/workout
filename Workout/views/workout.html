@@ -16,7 +16,7 @@
 
 <script type="text/x-kendo-template" id="exercisesTemplate">
     <li>
-        <div class="exerciseImage">#= data.SVGImage #</div>
+        <img src="#= app.data.files.resolvePictureUrl(data.Image) #" class="exerciseImage" />
         <span>#: data.Name #</span>
     </li>
 </script>
