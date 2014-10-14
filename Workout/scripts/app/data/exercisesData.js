@@ -3,7 +3,13 @@ app.data = app.data || {};
 
 app.data.exercises = (function () {
     var typeName = 'Exercises',
-        exercisesDataSource = new kendo.data.DataSource();
+        exercisesDataSource = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id"
+                }
+            }
+        });
 
     var init = function () {
         if (localStorage.getItem(typeName) != null) {
@@ -18,9 +24,23 @@ app.data.exercises = (function () {
         }
     }
 
+    var getByIds = function (ids) {
+        var exercises = [];
+
+        for (i = 0; i < ids.length; i++) {
+            var exercise = exercisesDataSource.get(ids[i]);
+            exercises.push(exercise);
+        }
+
+        return exercises;
+    };
+
     document.addEventListener('appInitialized', function () {
         init();
     }, false);
 
-    return exercisesDataSource;
+    return {
+        dataSource: exercisesDataSource,
+        getByIds: getByIds
+    };
 }());

@@ -6,7 +6,13 @@ app.models.learn = (function () {
         title: 'Learn',
         workoutsDataSource: app.data.workouts,
         workoutSelected: function (e) {
-            app.mobileApp.navigate('views/workout.html?uid=' + e.data.uid, "slide");
+            var transition = "slide";
+
+            if (app.devicePlatform == mobilePlatforms.android) {
+                transition = "none";
+            }
+            
+            app.mobileApp.navigate('views/workout.html?uid=' + e.data.uid, transition);
         }
     }
 

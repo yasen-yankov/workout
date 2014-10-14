@@ -4,13 +4,22 @@ body, html {
     width: 100%;
 }
 
-.btn {
-    padding: .5em .8em;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 3px;
+.km-button {
+    margin: 0 .1rem;
+}
+
+.km-header {
+    background: #F4F4F4;
+}
+
+.km-flat .km-button {
     background: #DCDCDC;
-    border-color: #DCDCDC;
+    border-color: #C4C4C4;
+}
+
+.km-flat .km-state-active {
+    background: #10c4b2;
+    border-color: #0EB09F;
 }
 
 #settings-list {

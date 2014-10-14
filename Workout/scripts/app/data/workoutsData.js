@@ -3,18 +3,20 @@ app.data = app.data || {};
 
 app.data.workouts = (function () {
     var typeName = 'Workouts',
-        workoutsDataSource = new kendo.data.DataSource();
+        workoutsDataSource = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id"
+                }
+            }
+        });
 
     var init = function () {
         if (localStorage.getItem(typeName) != null) {
             var data = JSON.parse(localStorage.getItem(typeName));
             workoutsDataSource.data(data);
         } else {
-            var exercisesExp = {
-                "Exercises": true
-            };
-
-            app.everlive.data(typeName).expand(exercisesExp).get()
+            app.everlive.data(typeName).get()
                 .then(function (data) {
                     localStorage.setItem(typeName, JSON.stringify(data.result));
                     workoutsDataSource.data(data.result);
@@ -33,6 +35,7 @@ app.data.workouts = (function () {
 
         app.everlive.data(typeName).get(query)
             .then(function (data) {
+                
             });
     };
 

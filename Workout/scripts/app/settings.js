@@ -39,3 +39,9 @@ var appSettings = {
         removeActivityConfirm: 'Are you sure you want to delete this Activity?'
     }
 };
+
+var mobilePlatforms = {
+    android: "Android",
+    ios: "iOS",
+    windows: "Win32NT"
+}

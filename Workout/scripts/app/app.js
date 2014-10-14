@@ -8,9 +8,9 @@ var app = (function (window) {
         };
 
     document.addEventListener('deviceready', function () {
-        devicePlatform = device.platform;
+        app.devicePlatform = device.platform;
 
-        if (devicePlatform == "Android") {
+        if (app.devicePlatform == mobilePlatforms.android) {
             mobileAppSettings.useNativeScrolling = true;
             mobileAppSettings.transition = "none";
         }
@@ -27,6 +27,7 @@ var app = (function (window) {
 
     return {
         mobileApp: mobileApp,
+        devicePlatform: devicePlatform,
         everlive: el
     };
 }(window));
