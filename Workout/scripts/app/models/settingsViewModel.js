@@ -7,25 +7,31 @@ app.models.settings = (function () {
         app.updater.checkForUpdate();
     };
 
-    var showContentUpdateButton = function () {
-        var contentUpdateButton = $("#content-update"),
-            iconName = app.updater.pendingUpdate ? "download" : "check",
-            text = app.updater.pendingUpdate ? "Download update" : "Version is up to date",
-            disabled = app.updater.pendingUpdate ? true : false;
+    var bindContentUpdateButton = function () {
+        var btn = $("#content-update"),
+            pendingUpdate = app.updater.pendingUpdate,
+            iconToHide = pendingUpdate ? "check" : "download",
+            text = pendingUpdate ? "Download update" : "Version is up to date",
+            disabled = pendingUpdate ? "disabled" : "";
         
-        contentUpdateButton.attr("data-icon", iconName);
-        contentUpdateButton.attr("disabled", disabled);
-        contentUpdateButton.html(text);
+        btn.find(".km-" + iconToHide).hide();
+        btn.attr("disabled", disabled);
+        btn.find(".km-text").html(text);
         
-        contentUpdateButton.kendoMobileButton();
+        btn.kendoMobileButton();
+    };
+    
+    var init = function (e) {
+        bindContentUpdateButton()
     };
 
     var show = function (e) {
-        showContentUpdateButton();
-    }
+        
+    };
 
     return {
         downloadUpdate: downloadUpdate,
-        show: show
+        show: show,
+        init: init
     };
 }());

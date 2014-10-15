@@ -11,7 +11,6 @@ var app = (function (window) {
         app.devicePlatform = device.platform;
 
         if (app.devicePlatform == mobilePlatforms.android) {
-            mobileAppSettings.useNativeScrolling = true;
             mobileAppSettings.transition = "none";
         }
 

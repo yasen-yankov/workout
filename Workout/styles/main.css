@@ -9,12 +9,12 @@ body, html {
 }
 
 .km-header {
-    background: #F4F4F4;
+    background: #f4f4f4;
 }
 
 .km-flat .km-button {
-    background: #DCDCDC;
-    border-color: #C4C4C4;
+    background: #dcdcdc;
+    border-color: #c4c4c4;
 }
 
 .km-flat .km-state-active {
