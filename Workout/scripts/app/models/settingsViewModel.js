@@ -11,7 +11,7 @@ app.models.settings = (function () {
         var btn = $("#content-update"),
             pendingUpdate = app.updater.pendingUpdate,
             iconToHide = pendingUpdate ? "check" : "download",
-            text = pendingUpdate ? "Download update" : "Version is up to date",
+            text = pendingUpdate ? "Download update" : "Content is up to date",
             disabled = pendingUpdate ? "disabled" : "";
         
         btn.find(".km-" + iconToHide).hide();

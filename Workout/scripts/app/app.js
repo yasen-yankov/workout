@@ -15,7 +15,8 @@ var app = (function (window) {
         }
 
         app.mobileApp = new kendo.mobile.Application(document.body, mobileAppSettings);
-
+        
+        $("body").show();
         navigator.splashscreen.hide();
     }, false);
 

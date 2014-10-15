@@ -13,7 +13,7 @@
 
 <script type="text/x-kendo-template" id="exercisesTemplate">
     <li>
-        <img src="#= app.data.files.resolvePictureUrl(data.Image) #" class="exerciseImage" />
+        <img src="data:image/png;base64,#= data.ImageThumbBase64 #" class="exerciseImage" />
         <span>#: data.Name #</span>
     </li>
 </script>

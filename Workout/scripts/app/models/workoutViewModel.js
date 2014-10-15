@@ -7,7 +7,7 @@ app.models.workout = (function () {
             workout;
 
         var init = function (e) {
-            debugger;
+
         };
 
         var show = function (e) {
