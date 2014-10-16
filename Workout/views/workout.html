@@ -1,14 +1,15 @@
-<div data-role="view" data-layout="no-footer" data-init="app.models.workout.init" data-show="app.models.workout.show" data-use-native-scrolling="true">
+<div id="workoutView" data-role="view" data-layout="no-footer" data-init="app.models.workout.init" data-show="app.models.workout.show" data-use-native-scrolling="true">
     <header data-role="header">
         <div data-role="navbar">
             <span data-bind="source: Name"></span>
             <a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton">Back</a>
-        </div>
+        </div>        
+    </header>
+    <div class="content-stretched">
         <p class="description" data-bind="text: Description"></p>
         <a data-role="button" class="startWorkoutBtn" data-icon="play">Start workout</a>
-    </header>
-    
-    <ul class="exerciseList" data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
+        <ul class="exercise-list content--flex" data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
+    </div>
 </div>
 
 <script type="text/x-kendo-template" id="exercisesTemplate">

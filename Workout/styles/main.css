@@ -4,21 +4,43 @@ body, html {
     width: 100%;
 }
 
-.km-button {
-    margin: 0 .1rem;
+.content-stretched {
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: -moz-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+    -webkit-align-content: stretch;
+    align-content: stretch;
+    vertical-align: top;
+    overflow:hidden;
+}
+
+.content--flex {
+    flex: 1;
+    -moz-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
 }
 
 .km-header {
     background: #f4f4f4;
 }
 
-.km-flat .km-button {
-    background: #dcdcdc;
-    border-color: #c4c4c4;
-}
-
 .km-flat .km-state-active {
-    background: #10c4b2;
     border-color: #0EB09F;
 }
 
@@ -65,17 +87,19 @@ body, html {
     display: block;
 }
 
-.exerciseList {
+.exercise-list {
     list-style-type: none;
+    overflow: auto;
+    margin: 0;
 }
 
-.exerciseList li {
+.exercise-list li {
     height: 74px;
     padding: 10px 0;
     border-bottom: 1px solid #10c4b2;
 }
 
-.exerciseList li .exerciseImage {
+.exercise-list li .exerciseImage {
     display: inline-block;
     width: 48px;
     height: 56px;

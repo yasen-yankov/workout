@@ -14,8 +14,13 @@ var app = (function (window) {
             mobileAppSettings.transition = "none";
         }
 
+        if (app.devicePlatform == mobilePlatforms.windows) {
+            StatusBar.hide();
+            mobileAppSettings.statusBarStyle = "hidden";
+        }
+
         app.mobileApp = new kendo.mobile.Application(document.body, mobileAppSettings);
-        
+
         $("body").show();
         navigator.splashscreen.hide();
     }, false);
