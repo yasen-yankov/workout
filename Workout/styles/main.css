@@ -105,6 +105,15 @@ body, html {
     height: 56px;
 }
 
+#exercises-scroll-view .exercisesDetails {
+    text-align: center;
+}
+
+#exercises-scroll-view .exerciseImage {
+    height: 250px;
+    margin: 30px 0 25px 0;
+}
+
 /* COMMON STYLES*/
 .fl {
     float: left;

@@ -1,4 +1,4 @@
-<div id="workoutView" data-role="view" data-layout="no-footer" data-init="app.models.workout.init" data-show="app.models.workout.show" data-use-native-scrolling="true">
+<div id="workoutView" data-role="view" data-layout="no-footer" data-show="app.models.workout.show" data-use-native-scrolling="true">
     <header data-role="header">
         <div data-role="navbar">
             <span data-bind="source: Name"></span>
@@ -13,7 +13,7 @@
 </div>
 
 <script type="text/x-kendo-template" id="exercisesTemplate">
-    <li>
+    <li data-bind="click: exerciseSelected">
         <img src="data:image/png;base64,#= data.ImageThumbBase64 #" class="exerciseImage" />
         <span>#: data.Name #</span>
     </li>

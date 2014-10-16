@@ -2,36 +2,40 @@ var app = app || {};
 app.models = app.models || {};
 
 app.models.workout = (function () {
-    var workoutViewModel = (function () {
-        var workoutUid,
-            workout;
+    var workoutUid,
+        workout;
 
-        var init = function (e) {
-        };
+    var exerciseSelected = function (e) {
+        var transition = "slide";
 
-        var show = function (e) {
-            workoutUid = e.view.params.uid;
-
-            workout = app.data.workouts.getByUid(workoutUid);
-            
-            if (workout.Exercises == null) {
-                workout.Exercises = [];
-            }
-
-            if (workout.Exercises.length > 0 && typeof (workout.Exercises[0]) != 'object') {
-                workout.Exercises = app.data.exercises.getByIds(workout.Exercises);
-                workout = app.extensions.workout.sortExercisesByOrder(workout);
-            }
-
-            kendo.bind(e.view.element, workout, kendo.mobile.ui);
-        };
-
-        return {
-            init: init,
-            show: show,
-            workout: workout
+        if (app.devicePlatform == mobilePlatforms.android) {
+            transition = "none";
         }
-    }());
 
-    return workoutViewModel;
+        app.mobileApp.navigate('views/workoutExercisesDetails.html?workoutUid=' + workout.uid + '&exerciseUid=' + e.data.uid, transition);
+    };
+
+    var show = function (e) {
+        workoutUid = e.view.params.uid;
+
+        workout = app.data.workouts.getByUid(workoutUid);
+
+        if (workout.Exercises == null) {
+            workout.Exercises = [];
+        }
+
+        if (workout.Exercises.length > 0 && typeof (workout.Exercises[0]) != 'object') {
+            workout.Exercises = app.data.exercises.getByIds(workout.Exercises);
+            workout = app.extensions.workout.sortExercisesByOrder(workout);
+        }
+        
+        workout.exerciseSelected = exerciseSelected;
+
+        kendo.bind(e.view.element, workout, kendo.mobile.ui);
+    };
+
+    return {
+        show: show,
+        workout: workout
+    };
 }());
