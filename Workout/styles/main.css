@@ -83,19 +83,20 @@ body, html {
     margin: 1em;
 }
 
-.startWorkoutBtn {
+.start-workout-btn {
     display: block;
+    margin: 0;
 }
 
 .exercise-list {
     list-style-type: none;
     overflow: auto;
     margin: 0;
+    padding: 0 0 0 1em;
 }
 
 .exercise-list li {
-    height: 74px;
-    padding: 10px 0;
+    height: 70px;
     border-bottom: 1px solid #10c4b2;
 }
 
@@ -103,6 +104,17 @@ body, html {
     display: inline-block;
     width: 48px;
     height: 56px;
+}
+
+.exercise-list li a {
+    display: inline-block;
+    width: 100%;
+    padding: 6px;
+}
+
+.exercise-list li a:active {
+    //background-color: #10c4b2;
+    //color: #fff;
 }
 
 #exercises-scroll-view .exercisesDetails {

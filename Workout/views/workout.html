@@ -7,14 +7,16 @@
     </header>
     <div class="content-stretched">
         <p class="description" data-bind="text: Description"></p>
-        <a data-role="button" class="startWorkoutBtn" data-icon="play">Start workout</a>
+        <a data-role="button" class="start-workout-btn" data-icon="play">Start workout</a>
         <ul class="exercise-list content--flex" data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
     </div>
 </div>
 
 <script type="text/x-kendo-template" id="exercisesTemplate">
-    <li data-bind="click: exerciseSelected">
-        <img src="data:image/png;base64,#= data.ImageThumbBase64 #" class="exerciseImage" />
-        <span>#: data.Name #</span>
+    <li>
+        <a data-bind="click: exerciseSelected">
+            <img src="data:image/png;base64,#= data.ImageThumbBase64 #" class="exerciseImage" />
+            <span>#: data.Name #</span>
+        </a>
     </li>
 </script>
