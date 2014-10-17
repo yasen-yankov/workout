@@ -20,15 +20,10 @@ app.models.workout = (function () {
 
         workout = app.data.workouts.getByUid(workoutUid);
 
-        if (workout.Exercises == null) {
-            workout.Exercises = [];
-        }
+        workout = app.extensions.workout.fetchExercises(workout);
+        workout.Exercises = app.extensions.exercise.fetchAllBase64ImagesForMultipleItems(workout.Exercises);
+        workout = app.extensions.workout.sortExercisesByOrder(workout);
 
-        if (workout.Exercises.length > 0 && typeof (workout.Exercises[0]) != 'object') {
-            workout.Exercises = app.data.exercises.getByIds(workout.Exercises);
-            workout = app.extensions.workout.sortExercisesByOrder(workout);
-        }
-        
         workout.exerciseSelected = exerciseSelected;
 
         kendo.bind(e.view.element, workout, kendo.mobile.ui);

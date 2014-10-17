@@ -12,14 +12,9 @@ app.models.workoutExercisesDetails = (function () {
 
             workout = app.data.workouts.getByUid(workoutUid);
 
-            if (workout.Exercises == null) {
-                workout.Exercises = [];
-            }
-
-            if (workout.Exercises.length > 0 && typeof (workout.Exercises[0]) != 'object') {
-                workout.Exercises = app.data.exercises.getByIds(workout.Exercises);
-                workout = app.extensions.workout.sortExercisesByOrder(workout);
-            }
+            workout = app.extensions.workout.fetchExercises(workout);
+            workout.Exercises = app.extensions.exercise.fetchAllBase64ImagesForMultipleItems(workout.Exercises);
+            workout = app.extensions.workout.sortExercisesByOrder(workout);
 
             var ds = new kendo.data.DataSource({
                 data: workout.Exercises
@@ -46,7 +41,7 @@ app.models.workoutExercisesDetails = (function () {
                     break;
                 }
             }
-            
+
             var exercisesScrollView = e.view.element.find("#exercises-scroll-view").data("kendoMobileScrollView");
             exercisesScrollView.refresh();
             exercisesScrollView.options.page = startIndex;
