@@ -12,7 +12,7 @@ app.data.workouts = (function () {
         });
 
     var init = function () {
-        if (localStorage.getItem(typeName) != null) {
+        if (localStorage.getItem(typeName) !== null) {
             var data = JSON.parse(localStorage.getItem(typeName));
             workoutsDataSource.data(data);
         } else {
@@ -27,7 +27,7 @@ app.data.workouts = (function () {
     var update = function (lastUpdateItem, updateItem) {
         var query = new Everlive.Query();
 
-        if (typeof (lastUpdateItem.ToDate) != 'undefined') {
+        if (typeof (lastUpdateItem.ToDate) !== 'undefined') {
             query.where().gt('ModifiedAt', lastUpdateItem.ToDate)
         }
 

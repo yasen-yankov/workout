@@ -12,7 +12,7 @@ app.data.base64Images = (function () {
         });
 
     var init = function () {
-        if (localStorage.getItem(typeName) != null) {
+        if (localStorage.getItem(typeName) !== null) {
             var data = JSON.parse(localStorage.getItem(typeName));
             base64ImagesDataSource.data(data);
         } else {

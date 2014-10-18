@@ -8,7 +8,7 @@ app.models.learn = (function () {
         workoutSelected: function (e) {
             var transition = "slide";
 
-            if (app.devicePlatform == mobilePlatforms.android) {
+            if (app.devicePlatform === mobilePlatforms.android) {
                 transition = "none";
             }
             

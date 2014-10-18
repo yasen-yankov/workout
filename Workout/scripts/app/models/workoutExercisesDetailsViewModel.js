@@ -26,8 +26,11 @@ app.models.workoutExercisesDetails = (function () {
                 dataSource: ds,
                 contentHeight: "100%",
                 enablePager: false,
-                template: kendo.template($("#exercisesDetailsTemplate").html())
+                template: kendo.template($("#exercisesDetailsTemplate").html()),
+                changing: exercisesScrollViewChanging
             });
+            
+            kendo.bind(e.view.element, workoutExercisesViewModel, kendo.mobile.ui);
         };
 
         var show = function (e) {
@@ -36,7 +39,7 @@ app.models.workoutExercisesDetails = (function () {
             var startIndex = 0;
 
             for (i = 0; i < workout.Exercises.length; i++) {
-                if (workout.Exercises[i].uid == exerciseUid) {
+                if (workout.Exercises[i].uid === exerciseUid) {
                     startIndex = i;
                     break;
                 }
@@ -46,12 +49,23 @@ app.models.workoutExercisesDetails = (function () {
             exercisesScrollView.refresh();
             exercisesScrollView.options.page = startIndex;
             exercisesScrollView.options.dataSource.page(startIndex);
+            setExerciseNumberInHeader(startIndex + 1);
+        };
+        
+        var exercisesScrollViewChanging = function (e) {
+            setExerciseNumberInHeader(e.nextPage + 1);
+        };
+        
+        var setExerciseNumberInHeader = function (number) {
+            var total = workout.Exercises.length,
+                text = number + " of " + total;
+            
+            $("#workoutExercisesDetails .header-text").text(text);
         };
 
         return {
             init: init,
-            show: show,
-            workout: workout
+            show: show
         }
     }());
 

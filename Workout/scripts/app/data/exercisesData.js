@@ -12,7 +12,7 @@ app.data.exercises = (function () {
         });
 
     var init = function () {
-        if (localStorage.getItem(typeName) != null) {
+        if (localStorage.getItem(typeName) !== null) {
             var data = JSON.parse(localStorage.getItem(typeName));
             exercisesDataSource.data(data);
         } else {

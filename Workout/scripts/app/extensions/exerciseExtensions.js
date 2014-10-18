@@ -1,14 +1,13 @@
 var app = app || {};
+
 app.extensions = app.extensions || {};
 
 app.extensions.exercise = (function () {
-    var defaultExerciseSVGImage = '';
-
     var fetchBase64Image = function (exercise) {
-        if (exercise.Image != null && typeof (exercise.Image) != 'undefined' && exercise.Image.trim() != '') {            var base64Image = app.data.base64Images.dataSource.get(exercise.ImageThumb);
+        if (exercise.Image !== null && typeof (exercise.Image) !== 'undefined' && exercise.Image.trim() !== '') {
             var base64Image = app.data.base64Images.dataSource.get(exercise.Image);
             
-            if (typeof (base64Image) != 'undefined') {
+            if (typeof (base64Image) !== 'undefined') {
                 exercise.ImageBase64 = base64Image.Base64String;
             }
         }
@@ -17,10 +16,10 @@ app.extensions.exercise = (function () {
     };
 
     var fetchBase64ImageThumb = function (exercise) {
-        if (exercise.ImageThumb != null && typeof (exercise.ImageThumb) != 'undefined' && exercise.ImageThumb.trim() != '') {
+        if (exercise.ImageThumb !== null && typeof (exercise.ImageThumb) !== 'undefined' && exercise.ImageThumb.trim() !== '') {
             var base64Image = app.data.base64Images.dataSource.get(exercise.ImageThumb);
             
-            if (typeof (base64Image) != 'undefined') {
+            if (typeof (base64Image) !== 'undefined') {
                 exercise.ImageThumbBase64 = base64Image.Base64String;
             }
         }

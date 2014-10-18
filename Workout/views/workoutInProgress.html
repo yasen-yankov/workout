@@ -1,0 +1,27 @@
+<div id="workoutInProgress" data-role="view" data-layout="no-footer" data-show="app.models.workoutInProgress.show" data-stretch="true">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span class="header-text"></span>
+            <a class="nav-button nav-button-back hide-text" data-align="left" data-role="button" data-bind="click: endWorkout">Give up</a>
+        </div>        
+    </header>
+    <a id="prev-exercise" title="Previous exercise"></a>
+    <div id="exercises-scroll-view"></div>
+    <a id="next-exercise" title="Next exercise"></a>
+</div>
+
+<script type="text/x-kendo-template" id="exercisesDetailsTemplate">
+    <div class="exercises-details">
+        <div style="display: #= data.isRest ? 'none' : '' #">
+            <img src="data:image/png;base64,#= data.ImageBase64 #" class="exercise-image" />
+            <h1>#: data.Name #</h1>
+        </div>
+        <div style="display: #= data.isRest ? '' : 'none' #">
+            <div class="rest-header-test">REST</div>
+            <h4>Next exercise:</h4>
+            <h4>#: data.nextExerciseName #</h4>
+            <img src="data:image/png;base64,#= data.nextExerciseImageThumbBase64 #" class="exercise-image-thumb" />
+        </div>
+        <div class="count-down-text"></div>
+    </div>
+</script>

@@ -1,6 +1,7 @@
-<div data-role="view" data-layout="no-footer" data-init="app.models.workoutExercisesDetails.init" data-show="app.models.workoutExercisesDetails.show" data-stretch="true">
+<div id="workoutExercisesDetails" data-role="view" data-layout="no-footer" data-init="app.models.workoutExercisesDetails.init" data-show="app.models.workoutExercisesDetails.show" data-stretch="true">
     <header data-role="header">
         <div data-role="navbar">
+            <span class="header-text"></span>
             <a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton">Back</a>
         </div>        
     </header>
@@ -8,8 +9,8 @@
 </div>
 
 <script type="text/x-kendo-template" id="exercisesDetailsTemplate">
-    <div class="exercisesDetails">
-        <img src="data:image/png;base64,#= data.ImageBase64 #" class="exerciseImage" />
+    <div class="exercises-details">
+        <img src="data:image/png;base64,#= data.ImageBase64 #" class="exercise-image" />
         <h1>#: data.Name #</h1>
     </div>
 </script>

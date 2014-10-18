@@ -10,11 +10,11 @@ var app = (function (window) {
     document.addEventListener('deviceready', function () {
         app.devicePlatform = device.platform;
 
-        if (app.devicePlatform == mobilePlatforms.android) {
+        if (app.devicePlatform === mobilePlatforms.android) {
             mobileAppSettings.transition = "none";
         }
 
-        if (app.devicePlatform == mobilePlatforms.windows) {
+        if (app.devicePlatform === mobilePlatforms.windows) {
             StatusBar.hide();
             mobileAppSettings.statusBarStyle = "hidden";
         }

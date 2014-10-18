@@ -36,6 +36,21 @@ body, html {
     -ms-flex: 1;
 }
 
+#prev-exercise,
+#next-exercise
+{
+    width: 45px;
+}
+
+.rest-header-test {
+    font-size: 50px;
+    margin: 2em 0;
+}
+
+.count-down-text {
+    font-size: 50px;
+}
+
 .km-header {
     background: #f4f4f4;
 }
@@ -85,44 +100,53 @@ body, html {
 
 .start-workout-btn {
     display: block;
+    border-width: 1px 0 !important;
+    border-radius: 0 !important;
     margin: 0;
+}
+
+.exercise-image {
+    height: 250px;
+}
+
+.exercise-image-thumb {
+    width: 48px;
+    height: 56px;
 }
 
 .exercise-list {
     list-style-type: none;
     overflow: auto;
     margin: 0;
-    padding: 0 0 0 1em;
+    padding: 0;
 }
 
-.exercise-list li {
-    height: 70px;
-    border-bottom: 1px solid #10c4b2;
-}
-
-.exercise-list li .exerciseImage {
+.exercise-list li .exercise-image {
     display: inline-block;
-    width: 48px;
-    height: 56px;
+    margin: 0 1em;
+    vertical-align: middle;
+}
+
+.exercise-list li span {
+    vertical-align: bottom;
 }
 
 .exercise-list li a {
     display: inline-block;
     width: 100%;
-    padding: 6px;
+    padding: 5px;
+    border-bottom: 1px solid #dbdbdb;
 }
 
 .exercise-list li a:active {
-    //background-color: #10c4b2;
-    //color: #fff;
+    background: #ededed;
 }
 
-#exercises-scroll-view .exercisesDetails {
+#exercises-scroll-view .exercises-details {
     text-align: center;
 }
 
-#exercises-scroll-view .exerciseImage {
-    height: 250px;
+#exercises-scroll-view .exercise-image {
     margin: 30px 0 25px 0;
 }
 
@@ -185,6 +209,12 @@ body, html {
 .km-check:before
 {
     content: "\e037";
+}
+
+.km-go-back:after,
+.km-go-back:before
+{
+    content: "\e013";
 }
 
 /* BUTTON STYLES*/
