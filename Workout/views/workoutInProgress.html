@@ -5,9 +5,11 @@
             <a class="nav-button nav-button-back hide-text" data-align="left" data-role="button" data-bind="click: endWorkout">Give up</a>
         </div>        
     </header>
-    <a id="prev-exercise" title="Previous exercise"></a>
-    <div id="exercises-scroll-view"></div>
-    <a id="next-exercise" title="Next exercise"></a>
+    <div data-bind="click: containerClick" class="km-content km-stretched-view">
+        <a id="prev-exercise" title="Previous exercise"></a>
+        <div id="exercises-scroll-view"></div>
+        <a id="next-exercise" title="Next exercise"></a>
+    </div>
 </div>
 
 <script type="text/x-kendo-template" id="exercisesDetailsTemplate">
@@ -22,6 +24,6 @@
             <h4>#: data.nextExerciseName #</h4>
             <img src="data:image/png;base64,#= data.nextExerciseImageThumbBase64 #" class="exercise-image-thumb" />
         </div>
-        <div class="count-down-text"></div>
+        <div class="count-down-text" data-bind="click: containerClick"></div>
     </div>
 </script>

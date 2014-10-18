@@ -5,7 +5,10 @@ var workoutExecutor = function () {
         _setCountDownText,
         _currentExerciseNumber,
         _exercises,
-        _countDownTimeout;
+        _countDownTimeout,
+        _paused,
+        _pausedCountDownSecondsRemaining,
+        _pausedCountDownOnEnd;
 
     var initialize = function (workout, onPrev, onNext, setCountDownText) {
         _workout = workout;
@@ -72,6 +75,14 @@ var workoutExecutor = function () {
         if (secondsString.length < 2) {
             secondsString = "0" + secondsString;
         }
+        
+        if (_paused) {
+            window.clearTimeout(_countDownTimeout);
+            _pausedCountDownSecondsRemaining = secondsRemaining;
+            _pausedCountDownOnEnd = onEnded;
+            
+            return;
+        }
 
         var text = minutes + ":" + secondsString;
 
@@ -88,13 +99,29 @@ var workoutExecutor = function () {
             onEnded();
         }
     };
+    
+    var pause = function () {
+        _paused = true;
+    };
+    
+    var resume = function () {
+        _paused = false;
+        countDown(_pausedCountDownSecondsRemaining + 1, _pausedCountDownOnEnd);
+        _pausedCountDownSecondsRemaining = null;
+        _pausedCountDownOnEnd = null;
+    };
+    
+    var isPaused = function () {
+        return _paused;
+    };
 
     return {
         initialize: initialize,
         begin: begin,
         end: end,
-        //pause: pause,
-        //resume: resume,
+        pause: pause,
+        resume: resume,
+        isPaused: isPaused,
         //next: next,
         //prev: prev
     }
