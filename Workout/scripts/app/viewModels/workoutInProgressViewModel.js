@@ -32,7 +32,6 @@ app.models.workoutInProgress = (function () {
             workout = app.extensions.workout.sortExercisesByOrder(workout);
             
             _executableWorkout = new ExecutableWorkout(workout);
-            debugger;
 
             var exercisesDataSource = new kendo.data.DataSource({
                 data: _executableWorkout.exercises
@@ -55,7 +54,7 @@ app.models.workoutInProgress = (function () {
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
 
-            _workoutExecutor = new workoutExecutor(_executableWorkout, exercisesScrollViewNext, setExerciseCountDownText);
+            _workoutExecutor = new WorkoutExecutor(_executableWorkout, exercisesScrollViewNext, setExerciseCountDownText);
             _workoutExecutor.begin();
         };
 

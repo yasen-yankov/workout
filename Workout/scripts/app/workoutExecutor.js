@@ -1,4 +1,4 @@
-var workoutExecutor = function (workout, onNext, setCountDownText) {
+var WorkoutExecutor = function (workout, onNext, setCountDownText) {
     var _onNext,
         _setCountDownText,
         _currentExerciseNumber,
