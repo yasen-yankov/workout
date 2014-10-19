@@ -19,8 +19,8 @@
     "ID_CAP_NETWORKING"
   ],
   "WP8Requirements": [],
-  "WP8PublisherID": "",
-  "WP8ProductID": "",
+  "WP8PublisherID": "{25104cac-97b5-4eb2-92e4-820f76fb1f97}",
+  "WP8ProductID": "{3c862d87-81d4-47c3-a3d3-bab7a29624b6}",
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "FrameworkVersion": "3.5.0",
   "CorePlugins": [
@@ -28,16 +28,17 @@
     "org.apache.cordova.device",
     "org.apache.cordova.device-motion",
     "org.apache.cordova.device-orientation",
-    "org.apache.cordova.dialogs",
     "org.apache.cordova.file",
     "org.apache.cordova.file-transfer",
     "org.apache.cordova.globalization",
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.media",
     "org.apache.cordova.network-information",
+    "org.apache.cordova.dialogs",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.statusbar",
-    "org.apache.cordova.vibration"
+    "org.apache.cordova.vibration",
+    "nl.x-services.plugins.flashlight@2.0.2"
   ],
   "AndroidPermissions": [
     "android.permission.ACCESS_COARSE_LOCATION",
@@ -63,12 +64,17 @@
     "Portrait",
     "Landscape"
   ],
-  "AndroidHardwareAcceleration": "True",
+  "AndroidHardwareAcceleration": "true",
   "iOSStatusBarStyle": "Default",
   "WP8SupportedResolutions": [
     "ID_RESOLUTION_WVGA",
     "ID_RESOLUTION_WXGA",
     "ID_RESOLUTION_HD720P"
   ],
-  "Framework": "Cordova"
+  "Framework": "Cordova",
+  "CordovaPluginVariables": {
+    "com.telerik.mobiletesting": {
+      "IOS_APP_URL": ""
+    }
+  }
 }
