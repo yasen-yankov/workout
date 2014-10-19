@@ -1,122 +1,90 @@
-var workoutExecutor = function () {
-    var _workout,
-        _onPrev,
-        _onNext,
+var workoutExecutor = function (workout, onNext, setCountDownText) {
+    var _onNext,
         _setCountDownText,
         _currentExerciseNumber,
         _exercises,
         _countDownTimeout,
         _paused,
-        _pausedCountDownSecondsRemaining,
-        _pausedCountDownOnEnd;
+        _countDownSecondsRemaining,
+        _countDownOnEnd;
 
-    var initialize = function (workout, onPrev, onNext, setCountDownText) {
-        _workout = workout;
-        _onPrev = onPrev;
-        _onNext = onNext;
-        _setCountDownText = setCountDownText;
-        _exercises = getExercises(_workout);
-    }
-
-    var getCurrentExercise = function () {
+    var _getCurrentExercise = function () {
         return _exercises[_currentExerciseNumber];
     }
-
-    var getExercises = function (workout) {
-        var exercises = [];
-
-        for (i = 0; i < workout.Exercises.length; i++) {
-            var exercise = {};
-            
-            if (!workout.Exercises[i].isRest) {
-                exerciseId = workout.Exercises[i].Id;
-
-                exercise.seconds = workout.ExercisesOrder[exerciseId].seconds;
-            }
-            else {
-                exercise = workout.Exercises[i];
-            }
-            
-            exercises.push(exercise);
-        }
-
-        return exercises;
-    };
 
     var begin = function () {
         _currentExerciseNumber = 0;
 
-        beginCurrentExercise();
+        _beginCurrentExercise();
     };
 
     var end = function () {
         window.clearTimeout(_countDownTimeout);
     };
 
-    var beginCurrentExercise = function () {
-        var secondsRemaining = getCurrentExercise().seconds;
+    var _beginCurrentExercise = function () {
+        var secondsRemaining = _getCurrentExercise().seconds;
 
-        countDown(secondsRemaining, endCurrentExercise);
+        _countDown(secondsRemaining, _endCurrentExercise);
     };
 
-    var endCurrentExercise = function () {
+    var _endCurrentExercise = function () {
         if (_currentExerciseNumber < _exercises.length) {
             _currentExerciseNumber++;
             _onNext();
-            beginCurrentExercise();
+            _beginCurrentExercise();
         }
     };
 
-    var countDown = function (secondsRemaining, onEnded) {
-        var minutes = Math.floor(secondsRemaining / 60);
-        var seconds = secondsRemaining - minutes * 60;
+    var _countDown = function (secondsRemaining, onEnded) {
+        _countDownSecondsRemaining = secondsRemaining;
+        _countDownOnEnd = onEnded;
+        
+        var minutes = Math.floor(_countDownSecondsRemaining / 60);
+        var seconds = _countDownSecondsRemaining - minutes * 60;
         var secondsString = seconds + "";
 
         if (secondsString.length < 2) {
             secondsString = "0" + secondsString;
-        }
-        
-        if (_paused) {
-            window.clearTimeout(_countDownTimeout);
-            _pausedCountDownSecondsRemaining = secondsRemaining;
-            _pausedCountDownOnEnd = onEnded;
-            
-            return;
         }
 
         var text = minutes + ":" + secondsString;
 
         _setCountDownText(text);
 
-        if (secondsRemaining > 0) {
-            secondsRemaining--;
+        if (_countDownSecondsRemaining > 0) {
+            _countDownSecondsRemaining--;
 
             _countDownTimeout = window.setTimeout(function () {
-                countDown(secondsRemaining, onEnded);
+                _countDown(_countDownSecondsRemaining, _countDownOnEnd);
             }, 1000);
         }
         else {
-            onEnded();
+            _countDownOnEnd();
         }
     };
     
     var pause = function () {
         _paused = true;
+        window.clearTimeout(_countDownTimeout);
     };
     
     var resume = function () {
         _paused = false;
-        countDown(_pausedCountDownSecondsRemaining + 1, _pausedCountDownOnEnd);
-        _pausedCountDownSecondsRemaining = null;
-        _pausedCountDownOnEnd = null;
+        _countDown(_countDownSecondsRemaining + 1, _countDownOnEnd);
     };
     
     var isPaused = function () {
         return _paused;
     };
+    
+    var _init = function (workout, onNext, setCountDownText) {
+        _onNext = onNext;
+        _setCountDownText = setCountDownText;
+        _exercises = workout.exercises;
+    }(workout, onNext, setCountDownText);
 
     return {
-        initialize: initialize,
         begin: begin,
         end: end,
         pause: pause,

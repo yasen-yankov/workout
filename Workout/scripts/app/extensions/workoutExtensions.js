@@ -30,33 +30,9 @@ app.extensions.workout = (function () {
         
         return workout;
     };
-    
-    var addRestsBetweenExercises = function(workout) {
-        var exercises = [];
-        
-        for (var i = 0; i < workout.Exercises.length; i++) {
-            exercises.push(workout.Exercises[i]);
-            
-            if (i !== workout.Exercises.length - 1) {
-                var rest = {
-                    isRest: true,
-                    nextExerciseImageThumbBase64: workout.Exercises[i + 1].ImageThumbBase64,
-                    nextExerciseName: workout.Exercises[i + 1].Name,
-                    seconds: workout.RestInterval
-                };
-                
-                exercises.push(rest);
-            }
-        }
-        
-        workout.Exercises = exercises;
-        
-        return workout;
-    };
 
     return {
         sortExercisesByOrder: sortExercisesByOrder,
-        fetchExercises: fetchExercises,
-        addRestsBetweenExercises: addRestsBetweenExercises
+        fetchExercises: fetchExercises
     }
 }());

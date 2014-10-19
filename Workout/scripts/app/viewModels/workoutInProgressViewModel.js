@@ -5,35 +5,48 @@ app.models = app.models || {};
 app.models.workoutInProgress = (function () {
     var workoutInProgressViewModel = (function () {
         var workoutUid,
-            _numberOfExercises,
+            _executableWorkout,
             _workoutExecutor,
             _exercisesScrollView;
+        
+        var init = function (e) {
+            initTouchEvents(e);
+        }
+        
+        var initTouchEvents = function (e) {
+            e.view.element.find("#workoutInProgressWrapper").kendoTouch({
+                tap: workoutInProgressWrapperTapped
+            });
+            
+            e.view.element.find("#endWorkoutBtn").kendoTouch({
+                tap: endWorkout
+            });
+        };
 
         var show = function (e) {
             workoutUid = e.view.params.uid;
 
             var workout = app.data.workouts.getByUid(workoutUid);
-
             workout = app.extensions.workout.fetchExercises(workout);
             workout.Exercises = app.extensions.exercise.fetchAllBase64ImagesForMultipleItems(workout.Exercises);
             workout = app.extensions.workout.sortExercisesByOrder(workout);
-            _numberOfExercises = workout.Exercises.length;
             
-            var workoutToBind = app.extensions.workout.addRestsBetweenExercises(workout);
+            _executableWorkout = new ExecutableWorkout(workout);
+            debugger;
 
-            var ds = new kendo.data.DataSource({
-                                                   data: workoutToBind.Exercises
-                                               });
+            var exercisesDataSource = new kendo.data.DataSource({
+                data: _executableWorkout.exercises
+            });
 
             var exercisesScrollView = e.view.element.find("#exercises-scroll-view");
 
             exercisesScrollView.kendoMobileScrollView({
-                                                          dataSource: ds,
-                                                          contentHeight: "100%",
-                                                          enablePager: false,
-                                                          template: kendo.template($("#exercisesDetailsTemplate").html()),
-                                                          changing: exercisesScrollViewChanging
-                                                      });
+                dataSource: exercisesDataSource,
+                contentHeight: "100%",
+                enablePager: false,
+                template: kendo.template($("#workoutInProgressExercisesDetailsTemplate").html()),
+                changing: exercisesScrollViewChanging
+            });
 
             _exercisesScrollView = exercisesScrollView.getKendoMobileScrollView();
             exercisesScrollViewDisableScrolling();
@@ -42,19 +55,12 @@ app.models.workoutInProgress = (function () {
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
 
-            _workoutExecutor = new workoutExecutor();
-            _workoutExecutor.initialize(workout, exercisesScrollViewPrev, exercisesScrollViewNext, setExerciseCountDownText);
+            _workoutExecutor = new workoutExecutor(_executableWorkout, exercisesScrollViewNext, setExerciseCountDownText);
             _workoutExecutor.begin();
         };
 
         var exercisesScrollViewDisableScrolling = function () {
             _exercisesScrollView.pane.userEvents.bind("start", function () {
-                this.cancel();
-            });
-        };
-        
-        var exercisesScrollViewEnableScrolling = function () {
-            _exercisesScrollView.pane.userEvents.unbind("start", function () {
                 this.cancel();
             });
         };
@@ -72,12 +78,8 @@ app.models.workoutInProgress = (function () {
             _exercisesScrollView.next();
         };
 
-        var exercisesScrollViewPrev = function () {
-            _exercisesScrollView.prev();
-        };
-
         var setExerciseNumberInHeader = function (number) {
-            var text = number + " of " + _numberOfExercises;
+            var text = number + " of " + _executableWorkout.initialNumberOfExercises;
 
             $("#workoutInProgress .header-text").text(text);
         };
@@ -91,7 +93,7 @@ app.models.workoutInProgress = (function () {
             $(".exercises-details .count-down-text").text(text);
         };
         
-        var containerClick = function (e) {
+        var workoutInProgressWrapperTapped = function () {
             if (_workoutExecutor.isPaused()) {
                 _workoutExecutor.resume();
                 $(".exercises-details .count-down-text").css("opacity", "1");
@@ -103,9 +105,8 @@ app.models.workoutInProgress = (function () {
         };
 
         return {
-            show: show,
-            endWorkout: endWorkout,
-            containerClick: containerClick
+            init: init,
+            show: show
         }
     }());
 
