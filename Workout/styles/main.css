@@ -79,21 +79,6 @@ body, html {
     margin: 1em;
 }
 
-.workouts-list {
-    list-style-type: none;
-    padding: 0 1em;
-}
-
-.workouts-list li {
-    display: block;
-    margin: 1em 0;
-}
-
-.workouts-list li a {
-    display: block;
-    text-align: left;
-}
-
 .description {
     margin: 1em;
 }
@@ -114,31 +99,67 @@ body, html {
     height: 56px;
 }
 
-.exercise-list {
+#exerciseList li a {
+    padding: 5px;
+}
+
+.workouts-list li a {
+    padding: 1em;
+}
+
+.workouts-list .km-icon {
+    font-size: 1rem;
+}
+
+.start-workout-settings li a {
+    padding: 5px;
+}
+
+.start-workout-settings .km-text {
+    vertical-align: middle;
+}
+
+.start-workout-settings li .km-icon, img {
+    font-size: 1.5rem;
+    height: 30px;
+    margin: 0 5px;
+    vertical-align: middle;
+} 
+
+.list-view {
     list-style-type: none;
     overflow: auto;
     margin: 0;
     padding: 0;
 }
 
-.exercise-list li .exercise-image {
+.list-view .text-main {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.list-view .km-icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.list-view li .exercise-image {
     display: inline-block;
     margin: 0 1em;
     vertical-align: middle;
 }
 
-.exercise-list li span {
+.list-view li span {
     vertical-align: bottom;
 }
 
-.exercise-list li a {
+.list-view li a {
     display: inline-block;
     width: 100%;
-    padding: 5px;
     border-bottom: 1px solid #dbdbdb;
 }
 
-.exercise-list li a:active {
+.list-view li a:active {
     background: #ededed;
 }
 
@@ -215,6 +236,12 @@ body, html {
 .km-go-back:before
 {
     content: "\e013";
+}
+
+.km-refresh:after,
+.km-refresh:before
+{
+    content: "\e01d";
 }
 
 /* BUTTON STYLES*/

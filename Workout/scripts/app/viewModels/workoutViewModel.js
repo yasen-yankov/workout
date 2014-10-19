@@ -20,7 +20,7 @@ app.models.workout = (function () {
     };
     
     var initTouchEvents = function (e) {
-        e.view.element.find(".exercise-list li a").kendoTouch({
+        e.view.element.find("#exerciseList li a").kendoTouch({
             tap: exerciseTapped
         });
         

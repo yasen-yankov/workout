@@ -2,7 +2,7 @@ var app = app || {};
 
 app.models = app.models || {};
 
-app.models.workoutInProgress = (function () {
+app.models.workoutInProgress = (function (window) {
     var workoutInProgressViewModel = (function () {
         var _workoutUid,
             _executableWorkout,
@@ -26,7 +26,7 @@ app.models.workoutInProgress = (function () {
 
             _exercisesScrollView = exercisesScrollView.getKendoMobileScrollView();
             _exercisesScrollViewDisableScrolling();
-        }
+        };
 
         var show = function (e) {
             _workoutUid = e.view.params.uid;
@@ -85,7 +85,14 @@ app.models.workoutInProgress = (function () {
 
         var _endWorkout = function () {
             _workoutExecutor.end();
-            app.mobileApp.navigate('views/startWorkout.html');
+            
+            var transition = "slide:right";
+
+            if (app.devicePlatform === mobilePlatforms.android) {
+                transition = "none";
+            }
+            
+            app.mobileApp.navigate('views/startWorkout.html', transition);
         };
 
         var _setExerciseCountDownText = function (text) {
@@ -110,4 +117,4 @@ app.models.workoutInProgress = (function () {
     }());
 
     return workoutInProgressViewModel;
-}());
+}(window));
