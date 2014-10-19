@@ -4,95 +4,95 @@ app.models = app.models || {};
 
 app.models.workoutInProgress = (function () {
     var workoutInProgressViewModel = (function () {
-        var workoutUid,
+        var _workoutUid,
             _executableWorkout,
             _workoutExecutor,
-            _exercisesScrollView;
+            _exercisesScrollView,
+            _exercisesDataSource;
         
         var init = function (e) {
-            initTouchEvents(e);
-        }
-        
-        var initTouchEvents = function (e) {
-            e.view.element.find("#workoutInProgressWrapper").kendoTouch({
-                tap: workoutInProgressWrapperTapped
-            });
+            _initTouchEvents(e);
             
-            e.view.element.find("#endWorkoutBtn").kendoTouch({
-                tap: endWorkout
+            _exercisesDataSource = new kendo.data.DataSource();
+
+            var exercisesScrollView = e.view.element.find("#exercises-scroll-view");
+            exercisesScrollView.kendoMobileScrollView({
+                dataSource: _exercisesDataSource,
+                contentHeight: "100%",
+                enablePager: false,
+                template: kendo.template($("#workoutInProgressExercisesDetailsTemplate").html()),
+                changing: _exercisesScrollViewChanging
             });
-        };
+
+            _exercisesScrollView = exercisesScrollView.getKendoMobileScrollView();
+            _exercisesScrollViewDisableScrolling();
+        }
 
         var show = function (e) {
-            workoutUid = e.view.params.uid;
+            _workoutUid = e.view.params.uid;
 
-            var workout = app.data.workouts.getByUid(workoutUid);
+            var workout = app.data.workouts.getByUid(_workoutUid);
             workout = app.extensions.workout.fetchExercises(workout);
             workout.Exercises = app.extensions.exercise.fetchAllBase64ImagesForMultipleItems(workout.Exercises);
             workout = app.extensions.workout.sortExercisesByOrder(workout);
             
             _executableWorkout = new ExecutableWorkout(workout);
 
-            var exercisesDataSource = new kendo.data.DataSource({
-                data: _executableWorkout.exercises
-            });
+            _exercisesDataSource.data(_executableWorkout.exercises);
 
-            var exercisesScrollView = e.view.element.find("#exercises-scroll-view");
-
-            exercisesScrollView.kendoMobileScrollView({
-                dataSource: exercisesDataSource,
-                contentHeight: "100%",
-                enablePager: false,
-                template: kendo.template($("#workoutInProgressExercisesDetailsTemplate").html()),
-                changing: exercisesScrollViewChanging
-            });
-
-            _exercisesScrollView = exercisesScrollView.getKendoMobileScrollView();
-            exercisesScrollViewDisableScrolling();
-
-            setExerciseNumberInHeader(_exercisesScrollView.options.page + 1);
+            _setExerciseNumberInHeader(_exercisesScrollView.options.page + 1);
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
 
-            _workoutExecutor = new WorkoutExecutor(_executableWorkout, exercisesScrollViewNext, setExerciseCountDownText);
+            _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _setExerciseCountDownText);
             _workoutExecutor.begin();
         };
+        
+        var _initTouchEvents = function (e) {
+            e.view.element.find("#workoutInProgressWrapper").kendoTouch({
+                tap: _workoutInProgressWrapperTapped
+            });
 
-        var exercisesScrollViewDisableScrolling = function () {
+            e.view.element.find("#endWorkoutBtn").kendoTouch({
+                tap: _endWorkout
+            });
+        };
+
+        var _exercisesScrollViewDisableScrolling = function () {
             _exercisesScrollView.pane.userEvents.bind("start", function () {
                 this.cancel();
             });
         };
 
-        var exercisesScrollViewChanging = function (e) {
+        var _exercisesScrollViewChanging = function (e) {
             var page = e.nextPage + 1;
             
             if (page % 2 !== 0) {
                 page = Math.round(page / 2);
-                setExerciseNumberInHeader(page);
+                _setExerciseNumberInHeader(page);
             }
         };
 
-        var exercisesScrollViewNext = function () {
+        var _exercisesScrollViewNext = function () {
             _exercisesScrollView.next();
         };
 
-        var setExerciseNumberInHeader = function (number) {
+        var _setExerciseNumberInHeader = function (number) {
             var text = number + " of " + _executableWorkout.initialNumberOfExercises;
 
             $("#workoutInProgress .header-text").text(text);
         };
 
-        var endWorkout = function () {
+        var _endWorkout = function () {
             _workoutExecutor.end();
             app.mobileApp.navigate('views/startWorkout.html');
         };
 
-        var setExerciseCountDownText = function (text) {
+        var _setExerciseCountDownText = function (text) {
             $(".exercises-details .count-down-text").text(text);
         };
         
-        var workoutInProgressWrapperTapped = function () {
+        var _workoutInProgressWrapperTapped = function () {
             if (_workoutExecutor.isPaused()) {
                 _workoutExecutor.resume();
                 $(".exercises-details .count-down-text").css("opacity", "1");
