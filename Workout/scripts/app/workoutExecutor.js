@@ -1,5 +1,7 @@
-var WorkoutExecutor = function (workout, onNext, setCountDownText) {
+var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDownText) {
     var _onNext,
+        _onPrev,
+        _onCompleted,
         _setCountDownText,
         _currentExerciseNumber,
         _exercises,
@@ -29,10 +31,13 @@ var WorkoutExecutor = function (workout, onNext, setCountDownText) {
     };
 
     var _endCurrentExercise = function () {
-        if (_currentExerciseNumber < _exercises.length) {
+        if (_currentExerciseNumber < _exercises.length - 1) {
             _currentExerciseNumber++;
             _onNext();
             _beginCurrentExercise();
+        }
+        else {
+            _onCompleted();
         }
     };
 
@@ -51,6 +56,10 @@ var WorkoutExecutor = function (workout, onNext, setCountDownText) {
         var text = minutes + ":" + secondsString;
 
         _setCountDownText(text);
+        
+        if (_paused) {
+            return;
+        }
 
         if (_countDownSecondsRemaining > 0) {
             _countDownSecondsRemaining--;
@@ -67,22 +76,41 @@ var WorkoutExecutor = function (workout, onNext, setCountDownText) {
     var pause = function () {
         _paused = true;
         window.clearTimeout(_countDownTimeout);
+        _countDownSecondsRemaining++;
     };
     
     var resume = function () {
         _paused = false;
-        _countDown(_countDownSecondsRemaining + 1, _countDownOnEnd);
+        _countDown(_countDownSecondsRemaining, _countDownOnEnd);
     };
     
     var isPaused = function () {
         return _paused;
     };
     
-    var _init = function (workout, onNext, setCountDownText) {
+    var next = function () {
+        window.clearTimeout(_countDownTimeout);
+        _endCurrentExercise();
+    };
+    
+    var prev = function () {
+        if (_currentExerciseNumber == 0) {
+            return;
+        }
+        
+        window.clearTimeout(_countDownTimeout);
+        _currentExerciseNumber--;
+        _onPrev();
+        _beginCurrentExercise();
+    };
+    
+    var _init = function (workout, onNext, onPrev, onCompleted, setCountDownText) {
         _onNext = onNext;
+        _onPrev = onPrev;
+        _onCompleted = onCompleted;
         _setCountDownText = setCountDownText;
         _exercises = workout.exercises;
-    }(workout, onNext, setCountDownText);
+    }(workout, onNext, onPrev, onCompleted, setCountDownText);
 
     return {
         begin: begin,
@@ -90,7 +118,7 @@ var WorkoutExecutor = function (workout, onNext, setCountDownText) {
         pause: pause,
         resume: resume,
         isPaused: isPaused,
-        //next: next,
-        //prev: prev
+        next: next,
+        prev: prev
     }
 };

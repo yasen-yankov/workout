@@ -3,12 +3,19 @@
         <div data-role="navbar">
             <span class="header-text"></span>
             <a id="endWorkoutBtn" class="nav-button nav-button-back hide-text" data-align="left" data-role="button">Give up</a>
-        </div>        
+        </div>
     </header>
     <div id="workoutInProgressWrapper" class="km-content km-stretched-view">
-        <a id="prev-exercise" title="Previous exercise"></a>
         <div id="exercises-scroll-view"></div>
-        <a id="next-exercise" title="Next exercise"></a>
+        <div class="content-stretched content-stretched-position-bottom flex-direction-horizontal u-mb20">
+            <a class="prev-exercise-btn content--flex" title="Previous exercise" style="display: none">
+                <span class="km-icon km-prev"></span>
+            </a>
+            <div class="count-down-text content--flex"></div>
+            <a class="next-exercise-btn content--flex" title="Next exercise" style="display: none">
+                <span class="km-icon km-next"></span>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -24,6 +31,5 @@
             <h4>#: data.nextExerciseName #</h4>
             <img src="data:image/png;base64,#= data.nextExerciseImageThumbBase64 #" class="exercise-image-thumb" />
         </div>
-        <div class="count-down-text" data-bind="click: containerClick"></div>
     </div>
 </script>

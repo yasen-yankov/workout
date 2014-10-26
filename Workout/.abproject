@@ -24,21 +24,22 @@
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "FrameworkVersion": "3.5.0",
   "CorePlugins": [
+    "com.telerik.plugins.nativepagetransitions@0.1.5",
+    "nl.x-services.plugins.flashlight@2.0.2",
     "org.apache.cordova.battery-status",
     "org.apache.cordova.device",
     "org.apache.cordova.device-motion",
     "org.apache.cordova.device-orientation",
+    "org.apache.cordova.dialogs",
     "org.apache.cordova.file",
     "org.apache.cordova.file-transfer",
     "org.apache.cordova.globalization",
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.media",
     "org.apache.cordova.network-information",
-    "org.apache.cordova.dialogs",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.statusbar",
-    "org.apache.cordova.vibration",
-    "nl.x-services.plugins.flashlight@2.0.2"
+    "org.apache.cordova.vibration"
   ],
   "AndroidPermissions": [
     "android.permission.ACCESS_COARSE_LOCATION",

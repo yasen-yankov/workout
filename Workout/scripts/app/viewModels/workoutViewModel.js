@@ -15,21 +15,21 @@ app.models.workout = (function () {
         workout = app.extensions.workout.sortExercisesByOrder(workout);
 
         kendo.bind(e.view.element, workout, kendo.mobile.ui);
-        
+
         initTouchEvents(e);
     };
-    
+
     var initTouchEvents = function (e) {
         e.view.element.find("#exerciseList li a").kendoTouch({
             tap: exerciseTapped
         });
-        
+
         e.view.element.find("#chooseWorkoutBtn").kendoTouch({
-            tap: chooseWorkoutTapped
+            touchstart: chooseWorkoutTapped
         });
     };
-    
-     var exerciseTapped = function (e) {
+
+    var exerciseTapped = function (e) {
         var transition = "slide";
 
         if (app.devicePlatform === mobilePlatforms.android) {
@@ -38,7 +38,7 @@ app.models.workout = (function () {
 
         app.mobileApp.navigate('views/workoutExercisesDetails.html?workoutUid=' + workout.uid + '&exerciseUid=' + e.sender.element.data("uid"), transition);
     };
-    
+
     var chooseWorkoutTapped = function () {
         app.mobileApp.navigate('views/workoutInProgress.html?uid=' + workoutUid);
     };

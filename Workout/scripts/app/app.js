@@ -2,7 +2,7 @@ var app = (function (window) {
     var mobileApp,
         devicePlatform,
         mobileAppSettings = {
-            transition: 'fade',
+            transition: 'slide',
             skin: 'flat',
             initial: 'views/startWorkout.html'
         };
@@ -11,7 +11,7 @@ var app = (function (window) {
         app.devicePlatform = device.platform;
 
         if (app.devicePlatform === mobilePlatforms.android) {
-            mobileAppSettings.transition = "none";
+            //mobileAppSettings.transition = "none";
         }
 
         if (app.devicePlatform === mobilePlatforms.windows) {

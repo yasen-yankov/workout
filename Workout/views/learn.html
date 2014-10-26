@@ -1,10 +1,10 @@
 <div data-role="view" data-title="Learn" data-layout="main" data-init="app.models.learn.init">
-  <ul id="workouts-list" class="list-view workouts-list" data-template="workoutsTemplate" data-bind="source: workoutsDataSource"></ul>
+  <ul id="workouts-list" class="list-view list-view--border-bottom workouts-list" data-template="workoutsTemplate" data-bind="source: workoutsDataSource"></ul>
 </div>
 
 <script type="text/x-kendo-template" id="workoutsTemplate">
     <li>
-        <a data-bind="click: workoutSelected">
+        <a data-uid="#= data.uid #">
             <span class="km-icon km-details"></span>
             <span class="km-text">#: data.Name #</span>
         </a>

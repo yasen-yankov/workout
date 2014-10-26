@@ -7,7 +7,7 @@ app.models.settings = (function () {
         app.updater.checkForUpdate();
     };
 
-    var bindContentUpdateButton = function () {
+    var initContentUpdateButton = function () {
         var btn = $("#content-update"),
             pendingUpdate = app.updater.pendingUpdate,
             iconToHide = pendingUpdate ? "check" : "download",
@@ -22,7 +22,7 @@ app.models.settings = (function () {
     };
     
     var init = function (e) {
-        bindContentUpdateButton()
+        initContentUpdateButton();
     };
 
     var show = function (e) {

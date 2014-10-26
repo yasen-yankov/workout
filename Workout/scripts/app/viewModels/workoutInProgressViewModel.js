@@ -8,11 +8,10 @@ app.models.workoutInProgress = (function (window) {
             _executableWorkout,
             _workoutExecutor,
             _exercisesScrollView,
-            _exercisesDataSource;
+            _exercisesDataSource,
+            _exercisesScrollViewChanging;
         
         var init = function (e) {
-            _initTouchEvents(e);
-            
             _exercisesDataSource = new kendo.data.DataSource();
 
             var exercisesScrollView = e.view.element.find("#exercises-scroll-view");
@@ -21,11 +20,14 @@ app.models.workoutInProgress = (function (window) {
                 contentHeight: "100%",
                 enablePager: false,
                 template: kendo.template($("#workoutInProgressExercisesDetailsTemplate").html()),
-                changing: _exercisesScrollViewChanging
+                changing: _onExercisesScrollViewChanging,
+                change: _onExercisesScrollViewChange
             });
 
             _exercisesScrollView = exercisesScrollView.getKendoMobileScrollView();
             _exercisesScrollViewDisableScrolling();
+            
+            _initTouchEvents();
         };
 
         var show = function (e) {
@@ -44,17 +46,25 @@ app.models.workoutInProgress = (function (window) {
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
 
-            _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _setExerciseCountDownText);
+            _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _setExerciseCountDownText);
             _workoutExecutor.begin();
         };
         
-        var _initTouchEvents = function (e) {
-            e.view.element.find("#workoutInProgressWrapper").kendoTouch({
-                tap: _workoutInProgressWrapperTapped
+        var _initTouchEvents = function () {
+            $("#workoutInProgressWrapper").kendoTouch({
+                touchstart: _workoutInProgressWrapperTapped
             });
 
-            e.view.element.find("#endWorkoutBtn").kendoTouch({
-                tap: _endWorkout
+            $("#endWorkoutBtn").kendoTouch({
+                touchstart: _endWorkout
+            });
+            
+            $(".next-exercise-btn").kendoTouch({
+                touchstart: _nextExercise
+            });
+            
+            $(".prev-exercise-btn").kendoTouch({
+                touchstart: _prevExercise
             });
         };
 
@@ -64,7 +74,9 @@ app.models.workoutInProgress = (function (window) {
             });
         };
 
-        var _exercisesScrollViewChanging = function (e) {
+        var _onExercisesScrollViewChanging = function (e) {
+            _exercisesScrollViewChanging = true;
+            
             var page = e.nextPage + 1;
             
             if (page % 2 !== 0) {
@@ -72,9 +84,17 @@ app.models.workoutInProgress = (function (window) {
                 _setExerciseNumberInHeader(page);
             }
         };
+        
+        var _onExercisesScrollViewChange = function (e) {
+            _exercisesScrollViewChanging = false;
+        };
 
         var _exercisesScrollViewNext = function () {
             _exercisesScrollView.next();
+        };
+        
+        var _exercisesScrollViewPrev = function () {
+            _exercisesScrollView.prev();
         };
 
         var _setExerciseNumberInHeader = function (number) {
@@ -94,20 +114,69 @@ app.models.workoutInProgress = (function (window) {
             
             app.mobileApp.navigate('views/startWorkout.html', transition);
         };
-
-        var _setExerciseCountDownText = function (text) {
-            $(".exercises-details .count-down-text").text(text);
+        
+        var _workoutCompleted = function () {
+            var transition = "slide:left";
+            
+            app.mobileApp.navigate('views/workoutCompleted.html?uid=' + _workoutUid, transition);
         };
         
-        var _workoutInProgressWrapperTapped = function () {
+        var _nextExercise = function () {
+            if (_exercisesScrollViewChanging) {
+                return;
+            }
+            
+            _workoutExecutor.next();
+            
             if (_workoutExecutor.isPaused()) {
+                _setPauseWorkoutUI();
+            }
+        };
+        
+        var _prevExercise = function () {
+            if (_exercisesScrollViewChanging) {
+                return;
+            }
+            
+            _workoutExecutor.prev();
+            
+            if (_workoutExecutor.isPaused()) {
+                _setPauseWorkoutUI();
+            }
+        };
+
+        var _setExerciseCountDownText = function (text) {
+            $(".count-down-text").text(text);
+        };
+        
+        var _workoutInProgressWrapperTapped = function (e) {
+            if (e.touch.initialTouch.className.indexOf("next-exercise-btn") > -1 ||
+                e.touch.initialTouch.parentElement.className.indexOf("next-exercise-btn") > -1 || 
+                e.touch.initialTouch.className.indexOf("prev-exercise-btn") > -1 ||
+                e.touch.initialTouch.parentElement.className.indexOf("prev-exercise-btn") > -1) {
+                return;
+            }
+            
+            if (_workoutExecutor.isPaused()) {
+                _setResumeWorkoutUI();
                 _workoutExecutor.resume();
-                $(".exercises-details .count-down-text").css("opacity", "1");
             }
             else {
-                $(".exercises-details .count-down-text").css("opacity", "0.3");
+                _setPauseWorkoutUI();
                 _workoutExecutor.pause();
             }
+        };
+        
+        var _setResumeWorkoutUI = function () {
+            $(".count-down-text").css("opacity", "1");
+            $(".next-exercise-btn").hide();
+            $(".prev-exercise-btn").hide();
+        };
+        
+        var _setPauseWorkoutUI = function () {
+            $(".count-down-text").css("opacity", "0.3");
+            $(".next-exercise-btn").show();
+            $(".prev-exercise-btn").show();
         };
 
         return {

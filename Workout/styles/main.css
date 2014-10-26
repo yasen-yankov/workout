@@ -4,8 +4,15 @@ body, html {
     width: 100%;
 }
 
+.u-mb20 {
+    margin: 0 0 20px 0;
+}
+
+.u-bt {
+    border-top: 1px;
+}
+
 .content-stretched {
-    top: 0;
     left: 0;
     position: absolute;
     display: -moz-box;
@@ -13,20 +20,40 @@ body, html {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    height: 100%;
     width: 100%;
-    -moz-box-orient: vertical;
-    -webkit-box-orient: vertical;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
     -webkit-align-items: stretch;
     -ms-align-items: stretch;
     align-items: stretch;
     -webkit-align-content: stretch;
     align-content: stretch;
-    vertical-align: top;
     overflow:hidden;
+}
+
+.content-stretched-position-top {
+    top: 0;
+    vertical-align: top;
+    height: 100%;
+}
+
+.content-stretched-position-bottom {
+    bottom: 0;
+    vertical-align: middle;
+}
+
+.flex-direction-vertical {
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.flex-direction-horizontal {
+    -moz-box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
 }
 
 .content--flex {
@@ -36,10 +63,22 @@ body, html {
     -ms-flex: 1;
 }
 
-#prev-exercise,
-#next-exercise
+.prev-exercise-btn .km-icon
 {
-    width: 45px;
+    float: left;
+}
+
+.next-exercise-btn .km-icon
+{
+    float: right;
+    margin-right: 0.4em;
+}
+
+.prev-exercise-btn,
+.next-exercise-btn .km-icon
+{
+    font-size: 4rem;
+    width: 55px;
 }
 
 .rest-header-test {
@@ -49,6 +88,7 @@ body, html {
 
 .count-down-text {
     font-size: 50px;
+    text-align: center;
 }
 
 .km-header {
@@ -111,18 +151,29 @@ body, html {
     font-size: 1rem;
 }
 
+.start-workout-settings {
+    width: 100%;
+    border-top: 1px solid #4C5356;
+    border-bottom: 1px solid #4C5356;
+}
+
+.start-workout-settings :first-child {
+    border: 0;
+}
+
 .start-workout-settings li a {
-    padding: 5px;
+    padding: 1em 0;
 }
 
 .start-workout-settings .km-text {
     vertical-align: middle;
 }
 
-.start-workout-settings li .km-icon, img {
+.start-workout-settings li .km-icon {
     font-size: 1.5rem;
     height: 30px;
-    margin: 0 5px;
+    width: 23px;
+    margin: 0 0.5em;
     vertical-align: middle;
 } 
 
@@ -156,11 +207,18 @@ body, html {
 .list-view li a {
     display: inline-block;
     width: 100%;
-    border-bottom: 1px solid #dbdbdb;
 }
 
 .list-view li a:active {
     background: #ededed;
+}
+
+.list-view--border-top li a {
+    border-top: 1px solid #dbdbdb;
+}
+
+.list-view--border-bottom li a {
+    border-bottom: 1px solid #dbdbdb;
 }
 
 #exercises-scroll-view .exercises-details {
@@ -214,6 +272,17 @@ body, html {
 }
 
 /* BUTTON ICONS*/
+.km-root .km-pane .km-view .km-stopwatch {
+    background-size: 100% 100%;
+    -webkit-background-clip: border-box;
+    background-color: currentcolor;
+}
+
+.km-stopwatch {
+    -webkit-mask-box-image: url("images/chronometer_45_60.png");
+    background-color: red;
+}
+
 .km-cancel:after,
 .km-cancel:before
 {
@@ -242,6 +311,18 @@ body, html {
 .km-refresh:before
 {
     content: "\e01d";
+}
+
+.km-prev:after,
+.km-prev:before
+{
+    content: "\e013";
+}
+
+.km-next:after,
+.km-next:before
+{
+    content: "\e010";
 }
 
 /* BUTTON STYLES*/
