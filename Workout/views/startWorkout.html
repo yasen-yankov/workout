@@ -1,17 +1,22 @@
-<div data-role="view" data-title="Workout" data-layout="main" data-init="app.models.startWorkout.init" data-stretch="true">
+<div data-role="view" data-title="Workout" data-layout="main" data-init="app.models.startWorkout.init" data-show="app.models.startWorkout.show" data-stretch="true">
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
             <a class="nav-button nav-button-add hide-text settings-btn-js" data-align="right" data-role="button" data-icon="settings"></a>
         </div>
     </header>
+    <div>
+        <a class="start-workout-btn start-workout-btn-js">
+            <span class="km-icon km-play"></span>
+        </a>
+    </div>
     <div class="content-stretched content-stretched-position-bottom u-mb20">
         <ul class="list-view list-view--border-top start-workout-settings">
             <li>
                 <a id="selectWorkout">
                     <span class="km-icon km-stopwatch"></span>
                     <span class="km-text text-main">Workout</span>
-                    <span id="selectedWorkoutName"></span>
+                    <span id="selectedWorkoutName" data-bind="text: workoutName"></span>
                 </a>
                 <a id="selectNumberOfCircuits">
                     <span class="km-icon km-refresh"></span>

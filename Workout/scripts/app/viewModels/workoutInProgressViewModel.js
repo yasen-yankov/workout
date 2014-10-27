@@ -45,6 +45,8 @@ app.models.workoutInProgress = (function (window) {
             _setExerciseNumberInHeader(_exercisesScrollView.options.page + 1);
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
+            
+            _setResumeWorkoutUI();
 
             _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _setExerciseCountDownText);
             _workoutExecutor.begin();

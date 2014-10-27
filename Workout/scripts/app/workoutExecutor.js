@@ -94,7 +94,7 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
     };
     
     var prev = function () {
-        if (_currentExerciseNumber == 0) {
+        if (_currentExerciseNumber === 0) {
             return;
         }
         

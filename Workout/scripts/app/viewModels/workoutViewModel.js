@@ -40,7 +40,7 @@ app.models.workout = (function () {
     };
 
     var chooseWorkoutTapped = function () {
-        app.mobileApp.navigate('views/workoutInProgress.html?uid=' + workoutUid);
+        app.mobileApp.navigate('views/startWorkout.html?uid=' + workoutUid);
     };
 
     return {

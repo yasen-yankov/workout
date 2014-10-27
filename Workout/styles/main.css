@@ -63,6 +63,17 @@ body, html {
     -ms-flex: 1;
 }
 
+.start-workout-btn {
+    display: block;
+    width: 105px;
+    margin: 0 auto;
+}
+
+.start-workout-btn .km-icon {
+    display: inline-block;
+    font-size: 100px;
+}
+
 .prev-exercise-btn .km-icon
 {
     float: left;
