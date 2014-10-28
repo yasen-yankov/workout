@@ -19,6 +19,14 @@
     </div>
 </div>
 
+<div id="modalview-countdown" data-role="modalview">
+    <div class="content">
+        <span>
+            Starting in: <span class="u-fs--x-large" data-bind="text: secondsRemaining"></span>
+        </span>
+    </div>
+</div>
+
 <script type="text/x-kendo-template" id="workoutInProgressExercisesDetailsTemplate">
     <div class="exercises-details">
         <div style="display: #= data.isRest ? 'none' : '' #">

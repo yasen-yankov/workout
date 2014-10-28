@@ -47,9 +47,11 @@ app.models.workoutInProgress = (function (window) {
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
             
             _setResumeWorkoutUI();
-
-            _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _setExerciseCountDownText);
-            _workoutExecutor.begin();
+            
+            _doInitialCountdown(function () {
+                _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _setExerciseCountDownText);
+                _workoutExecutor.begin();
+            });
         };
         
         var _initTouchEvents = function () {
@@ -70,6 +72,29 @@ app.models.workoutInProgress = (function (window) {
             });
         };
 
+        var _doInitialCountdown = function (onCompleted) {            
+            var countdownModalView = $("#modalview-countdown");
+            
+            var viewModel = kendo.observable({
+                secondsRemaining: 0
+            });
+            
+            kendo.bind(countdownModalView, viewModel, kendo.mobile.ui);
+            countdownModalView.kendoMobileModalView("open");
+            
+            var updateUI = function (remainingSeconds) {
+                viewModel.set("secondsRemaining", remainingSeconds);
+            }
+            
+            var closeModalView = function () {
+                countdownModalView.kendoMobileModalView("close");
+                onCompleted();
+            }
+            
+            var countDownTimer = new CountDownTimer(3, updateUI, closeModalView);
+            countDownTimer.start();
+        };
+        
         var _exercisesScrollViewDisableScrolling = function () {
             _exercisesScrollView.pane.userEvents.bind("start", function () {
                 this.cancel();
@@ -87,7 +112,7 @@ app.models.workoutInProgress = (function (window) {
             }
         };
         
-        var _onExercisesScrollViewChange = function (e) {
+        var _onExercisesScrollViewChange = function () {
             _exercisesScrollViewChanging = false;
         };
 

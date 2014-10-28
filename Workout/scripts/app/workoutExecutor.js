@@ -5,10 +5,8 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
         _setCountDownText,
         _currentExerciseNumber,
         _exercises,
-        _countDownTimeout,
-        _paused,
-        _countDownSecondsRemaining,
-        _countDownOnEnd;
+        _countDownTimer,
+        _isPaused;
 
     var _getCurrentExercise = function () {
         return _exercises[_currentExerciseNumber];
@@ -21,14 +19,33 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
     };
 
     var end = function () {
-        window.clearTimeout(_countDownTimeout);
+        _countDownTimer.dispose();
     };
 
     var _beginCurrentExercise = function () {
         var secondsRemaining = _getCurrentExercise().seconds;
-
-        _countDown(secondsRemaining, _endCurrentExercise);
+        
+        _countDownTimer = new CountDownTimer(secondsRemaining, _updateRemainingSeconds, _endCurrentExercise);
+        _countDownTimer.start();
+        
+        if (_isPaused) {
+            _countDownTimer.pause();
+        }
     };
+    
+    var _updateRemainingSeconds = function (remainingSeconds) {
+        var minutes = Math.floor(remainingSeconds / 60);
+        var seconds = remainingSeconds - minutes * 60;
+        var secondsString = seconds + "";
+
+        if (secondsString.length < 2) {
+            secondsString = "0" + secondsString;
+        }
+
+        var text = minutes + ":" + secondsString;
+
+        _setCountDownText(text);
+    }
 
     var _endCurrentExercise = function () {
         if (_currentExerciseNumber < _exercises.length - 1) {
@@ -40,56 +57,23 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
             _onCompleted();
         }
     };
-
-    var _countDown = function (secondsRemaining, onEnded) {
-        _countDownSecondsRemaining = secondsRemaining;
-        _countDownOnEnd = onEnded;
-        
-        var minutes = Math.floor(_countDownSecondsRemaining / 60);
-        var seconds = _countDownSecondsRemaining - minutes * 60;
-        var secondsString = seconds + "";
-
-        if (secondsString.length < 2) {
-            secondsString = "0" + secondsString;
-        }
-
-        var text = minutes + ":" + secondsString;
-
-        _setCountDownText(text);
-        
-        if (_paused) {
-            return;
-        }
-
-        if (_countDownSecondsRemaining > 0) {
-            _countDownSecondsRemaining--;
-
-            _countDownTimeout = window.setTimeout(function () {
-                _countDown(_countDownSecondsRemaining, _countDownOnEnd);
-            }, 1000);
-        }
-        else {
-            _countDownOnEnd();
-        }
-    };
     
     var pause = function () {
-        _paused = true;
-        window.clearTimeout(_countDownTimeout);
-        _countDownSecondsRemaining++;
+        _isPaused = true;
+        _countDownTimer.pause();
     };
     
     var resume = function () {
-        _paused = false;
-        _countDown(_countDownSecondsRemaining, _countDownOnEnd);
+        _isPaused = false;
+        _countDownTimer.resume();
     };
     
     var isPaused = function () {
-        return _paused;
+        return _isPaused;
     };
     
     var next = function () {
-        window.clearTimeout(_countDownTimeout);
+        _countDownTimer.dispose();
         _endCurrentExercise();
     };
     
@@ -98,7 +82,7 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
             return;
         }
         
-        window.clearTimeout(_countDownTimeout);
+        _countDownTimer.dispose();
         _currentExerciseNumber--;
         _onPrev();
         _beginCurrentExercise();

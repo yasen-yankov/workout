@@ -12,6 +12,10 @@ body, html {
     border-top: 1px;
 }
 
+.u-fs--x-large {
+    font-size: x-large;
+}
+
 .content-stretched {
     left: 0;
     position: absolute;
@@ -63,10 +67,29 @@ body, html {
     -ms-flex: 1;
 }
 
+#modalview-countdown {
+    background-color: #10c4b2;
+    opacity: 0.9;
+    border-radius: 8px;
+}
+
+#modalview-countdown .content {
+    background-color: #10c4b2;
+    color: #fff;
+    padding: 15px 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
 .start-workout-btn {
     display: block;
     width: 105px;
     margin: 0 auto;
+}
+
+.start-workout-btn:active {
+    color: #000;
 }
 
 .start-workout-btn .km-icon {
