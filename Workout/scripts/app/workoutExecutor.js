@@ -1,8 +1,8 @@
-var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDownText) {
+var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, updateRemainingSeconds) {
     var _onNext,
         _onPrev,
         _onCompleted,
-        _setCountDownText,
+        _updateRemainingSeconds,
         _currentExerciseNumber,
         _exercises,
         _countDownTimer,
@@ -32,20 +32,6 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
             _countDownTimer.pause();
         }
     };
-    
-    var _updateRemainingSeconds = function (remainingSeconds) {
-        var minutes = Math.floor(remainingSeconds / 60);
-        var seconds = remainingSeconds - minutes * 60;
-        var secondsString = seconds + "";
-
-        if (secondsString.length < 2) {
-            secondsString = "0" + secondsString;
-        }
-
-        var text = minutes + ":" + secondsString;
-
-        _setCountDownText(text);
-    }
 
     var _endCurrentExercise = function () {
         if (_currentExerciseNumber < _exercises.length - 1) {
@@ -88,13 +74,13 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, setCountDo
         _beginCurrentExercise();
     };
     
-    var _init = function (workout, onNext, onPrev, onCompleted, setCountDownText) {
+    var _init = function (workout, onNext, onPrev, onCompleted, updateRemainingSeconds) {
         _onNext = onNext;
         _onPrev = onPrev;
         _onCompleted = onCompleted;
-        _setCountDownText = setCountDownText;
+        _updateRemainingSeconds = updateRemainingSeconds;
         _exercises = workout.exercises;
-    }(workout, onNext, onPrev, onCompleted, setCountDownText);
+    }(workout, onNext, onPrev, onCompleted, updateRemainingSeconds);
 
     return {
         begin: begin,

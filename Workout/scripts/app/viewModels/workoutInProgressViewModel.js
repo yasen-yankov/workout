@@ -49,7 +49,7 @@ app.models.workoutInProgress = (function (window) {
             _setResumeWorkoutUI();
             
             _doInitialCountdown(function () {
-                _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _setExerciseCountDownText);
+                _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _updateRemainingSeconds);
                 _workoutExecutor.begin();
             });
         };
@@ -60,7 +60,7 @@ app.models.workoutInProgress = (function (window) {
             });
 
             $("#endWorkoutBtn").kendoTouch({
-                touchstart: _endWorkout
+                tap: _endWorkout
             });
             
             $(".next-exercise-btn").kendoTouch({
@@ -171,6 +171,24 @@ app.models.workoutInProgress = (function (window) {
                 _setPauseWorkoutUI();
             }
         };
+
+        var _updateRemainingSeconds = function (remainingSeconds) {
+            if (remainingSeconds <= 3 && remainingSeconds > 0) {
+                navigator.notification.vibrate(1000);
+            }
+            
+            var minutes = Math.floor(remainingSeconds / 60);
+            var seconds = remainingSeconds - minutes * 60;
+            var secondsString = seconds + "";
+
+            if (secondsString.length < 2) {
+                secondsString = "0" + secondsString;
+            }
+
+            var text = minutes + ":" + secondsString;
+
+            _setExerciseCountDownText(text);
+        }
 
         var _setExerciseCountDownText = function (text) {
             $(".count-down-text").text(text);
