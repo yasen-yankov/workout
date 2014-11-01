@@ -3,10 +3,11 @@ var CountDownTimer = function (seconds, setRemainingSeconds, onEnded) {
         _paused,
         _setRemainingSeconds,
         _countDownSecondsRemaining,
+        _countDownSecondsTotal,
         _countDownOnEnd;
     
     var _countDown = function () {
-        _setRemainingSeconds(_countDownSecondsRemaining);
+        _setRemainingSeconds(_countDownSecondsRemaining, _countDownSecondsTotal);
         
         if (_paused) {
             return;
@@ -49,6 +50,7 @@ var CountDownTimer = function (seconds, setRemainingSeconds, onEnded) {
     
     var _init = function (seconds, setRemainingSeconds, onEnded) {
         _countDownSecondsRemaining = seconds;
+        _countDownSecondsTotal = seconds;
         _setRemainingSeconds = setRemainingSeconds;
         _countDownOnEnd = onEnded;
     }(seconds, setRemainingSeconds, onEnded);

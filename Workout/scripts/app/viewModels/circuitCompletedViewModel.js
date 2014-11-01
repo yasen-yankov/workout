@@ -62,8 +62,8 @@ app.models.circuitCompleted = (function () {
         app.mobileApp.navigate('views/workoutInProgress.html?uid=' + _workoutUid + '&circuits=' + _circuits + '&skipInitialCountdown=true');
     };
     
-    var _updateRemainingSeconds = function (remainingSeconds) {
-        _workoutNavigation.setCountdownSeconds(remainingSeconds);
+    var _updateRemainingSeconds = function (remainingSeconds, totalSeconds) {
+        _workoutNavigation.setCountdownSeconds(remainingSeconds, totalSeconds);
     };
     
     var _resume = function () {

@@ -11,7 +11,7 @@ app.models.workoutInProgress = (function (window) {
             _exercisesScrollView,
             _exercisesDataSource,
             _exercisesScrollViewChanging,
-            _workoutNavigation;
+            _workoutNavigationUI;
         
         var init = function (e) {
             _exercisesDataSource = new kendo.data.DataSource();
@@ -38,7 +38,7 @@ app.models.workoutInProgress = (function (window) {
                 onPause: _pause
             });
             
-            _workoutNavigation = _workoutNavigationElement.getKendoWorkoutNavigation();
+            _workoutNavigationUI = _workoutNavigationElement.getKendoWorkoutNavigation();
             
             
             _initTouchEvents();
@@ -62,7 +62,7 @@ app.models.workoutInProgress = (function (window) {
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
             
-            _workoutNavigation.refresh();
+            _workoutNavigationUI.refresh();
             
             _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _updateRemainingSeconds);
             
@@ -188,8 +188,12 @@ app.models.workoutInProgress = (function (window) {
             _workoutExecutor.pause();
         };
 
-        var _updateRemainingSeconds = function (remainingSeconds) {
-            _workoutNavigation.setCountdownSeconds(remainingSeconds);
+        var _updateRemainingSeconds = function (remainingSeconds, totalSeconds) {
+            if (remainingSeconds <= 3 && remainingSeconds > 0) {
+                navigator.notification.vibrate(1000);
+            }
+            
+            _workoutNavigationUI.setCountdownSeconds(remainingSeconds, totalSeconds);
         };
 
         return {

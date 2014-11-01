@@ -20,9 +20,11 @@ body, html {
     text-align: center;
 }
 
-.content-stretched {
-    left: 0;
+.u-pa {
     position: absolute;
+}
+
+.content-stretched {
     display: -moz-box;
     display: -webkit-box;
     display: -webkit-flex;
@@ -39,12 +41,14 @@ body, html {
 
 .content-stretched-position-top {
     top: 0;
+    left: 0;
     vertical-align: top;
     height: 100%;
 }
 
 .content-stretched-position-bottom {
     bottom: 0;
+    left: 0;
     vertical-align: middle;
 }
 
@@ -69,6 +73,21 @@ body, html {
     -moz-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
+}
+
+#workoutNavigation {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.progress-bar {
+    float: right;
+    height: 5px;
+    width: 100%;
+    background: #4c5356;
 }
 
 #modalview-countdown {

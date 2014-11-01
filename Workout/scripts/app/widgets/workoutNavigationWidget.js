@@ -38,12 +38,23 @@
             self._setResumeCountdownUI();
         },
         
-        setCountdownSeconds: function (seconds) {
+        setCountdownSeconds: function (remainingSeconds, totalSeconds) {
             var self = this;
             
-            var _text = self._convertSecondsToText(seconds);
-            
+            var _text = self._convertSecondsToText(remainingSeconds);
             self._countdownText.text(_text);
+            
+            if (remainingSeconds === totalSeconds) {
+                self._progressBar.stop(true, true);
+                self._progressBar.css('width', '100%');
+            }
+            
+            if (remainingSeconds === 0 || self._paused) {
+                return;
+            }
+            
+            var remainingSecondsPercentage = (remainingSeconds - 1) / totalSeconds * 100;
+            self._progressBar.animate({ width: remainingSecondsPercentage + '%' }, 1000, 'linear');
         },
         
         _setResumeCountdownUI: function () {
@@ -90,6 +101,7 @@
             }
             else {
                 self._setPauseCountdownUI();
+                self._progressBar.stop(true, true);
                 self.options.onPause();
             }
             
@@ -99,7 +111,8 @@
         _initElements: function () {
             var self = this;
             
-            self.element.addClass("content-stretched content-stretched-position-bottom flex-direction-horizontal u-mb20");
+            self._horizontalFlexWrapper = $("<div></div>")
+                .addClass("content-stretched flex-direction-horizontal");
             
             self._prevBtnSelectorClass = "prev-btn-js";
             self._prevBtn = $("<a></a>")
@@ -113,12 +126,12 @@
             }
             
             self._prevBtn.hide();
-            self.element.append(self._prevBtn);
+            self._horizontalFlexWrapper.append(self._prevBtn);
             
             self._countdownText = $("<div></div>")
                 .addClass('count-down-text content--flex');
             
-            self.element.append(self._countdownText);
+            self._horizontalFlexWrapper.append(self._countdownText);
             
             self._nextBtnSelectorClass = "next-btn-js";
             self._nextBtn = $("<a></a>")
@@ -132,7 +145,14 @@
             }
             
             self._nextBtn.hide();
-            self.element.append(self._nextBtn);
+            self._horizontalFlexWrapper.append(self._nextBtn);
+            
+            self.element.append(self._horizontalFlexWrapper);
+            
+            self._progressBar = $("<div></div>")
+                .addClass("progress-bar");
+            
+            self.element.append(self._progressBar);
         },
         
         _initTouchEvents: function () {
