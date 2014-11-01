@@ -40,7 +40,6 @@ app.models.workoutInProgress = (function (window) {
             
             _workoutNavigationUI = _workoutNavigationElement.getKendoWorkoutNavigation();
             
-            
             _initTouchEvents();
         };
 
@@ -64,13 +63,14 @@ app.models.workoutInProgress = (function (window) {
             
             _workoutNavigationUI.refresh();
             
-            _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _updateRemainingSeconds);
+            _workoutExecutor = 
+                new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _exerciseFirstSideComplete, _updateRemainingSeconds);
             
             if (skipInitialCountdown) {
                 _workoutExecutor.begin();
             }
             else {
-                _doInitialCountdown(function () {
+                _startModalViewCountdown(3, "Starting in:", function () {
                     _workoutExecutor.begin();
                 });
             }
@@ -82,11 +82,12 @@ app.models.workoutInProgress = (function (window) {
             });
         };
 
-        var _doInitialCountdown = function (onCompleted) {            
+        var _startModalViewCountdown = function (seconds, text, onCompleted) {            
             var countdownModalView = $("#modalview-countdown");
             
             var viewModel = kendo.observable({
-                secondsRemaining: 0
+                secondsRemaining: 0,
+                text: text
             });
             
             kendo.bind(countdownModalView, viewModel, kendo.mobile.ui);
@@ -101,7 +102,7 @@ app.models.workoutInProgress = (function (window) {
                 onCompleted();
             }
             
-            var countDownTimer = new CountDownTimer(3, updateUI, closeModalView);
+            var countDownTimer = new CountDownTimer(seconds, updateUI, closeModalView);
             countDownTimer.start();
         };
         
@@ -151,6 +152,14 @@ app.models.workoutInProgress = (function (window) {
             
             app.mobileApp.navigate('views/startWorkout.html', transition);
         };
+        
+        var _exerciseFirstSideComplete = function () {
+            _workoutExecutor.pause();
+            
+            _startModalViewCountdown(3, "Switch sides", function () {
+                _workoutExecutor.resume();
+            });
+        }
         
         var _workoutCompleted = function () {
             var transition = "slide:left";

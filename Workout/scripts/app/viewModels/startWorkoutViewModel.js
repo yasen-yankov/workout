@@ -25,7 +25,7 @@ app.models.startWorkout = (function () {
             }
         }
         
-        _circuits = 3;
+        _circuits = 2;
         
         var workout = app.data.workouts.getByUid(_workoutUid);
         

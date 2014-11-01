@@ -1,8 +1,10 @@
-var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, updateRemainingSeconds) {
+var WorkoutExecutor = function (workout, onNext, onPrev, onComplete, onExerciseFirstSideComplete, onUpdateRemainingSeconds) {
     var _onNext,
         _onPrev,
-        _onCompleted,
-        _updateRemainingSeconds,
+        _onComplete,
+        _onExerciseFirstSideComplete,
+        _dualExerciseFirstSideComplete,
+        _onUpdateRemainingSeconds,
         _currentExerciseNumber,
         _exercises,
         _countDownTimer,
@@ -23,6 +25,10 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, updateRema
     };
 
     var _beginCurrentExercise = function () {
+        if (_getCurrentExercise().isDualSided) {
+            _dualExerciseFirstSideComplete = false;
+        }
+        
         var secondsRemaining = _getCurrentExercise().seconds;
         
         _countDownTimer = new CountDownTimer(secondsRemaining, _updateRemainingSeconds, _endCurrentExercise);
@@ -32,6 +38,19 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, updateRema
             _countDownTimer.pause();
         }
     };
+    
+    var _updateRemainingSeconds = function (remainingSeconds, totalSeconds) {
+        if (totalSeconds / 2 === remainingSeconds + 1) {
+            if (_getCurrentExercise().isDualSided && !_dualExerciseFirstSideComplete) {
+                _onExerciseFirstSideComplete();
+                _dualExerciseFirstSideComplete = true;
+                
+                return;
+            }
+        }
+        
+        _onUpdateRemainingSeconds(remainingSeconds, totalSeconds);
+    }
 
     var _endCurrentExercise = function () {
         if (_currentExerciseNumber < _exercises.length - 1) {
@@ -40,7 +59,7 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, updateRema
             _beginCurrentExercise();
         }
         else {
-            _onCompleted();
+            _onComplete();
         }
     };
     
@@ -74,13 +93,14 @@ var WorkoutExecutor = function (workout, onNext, onPrev, onCompleted, updateRema
         _beginCurrentExercise();
     };
     
-    var _init = function (workout, onNext, onPrev, onCompleted, updateRemainingSeconds) {
+    var _init = function (workout, onNext, onPrev, onComplete, onExerciseFirstSideComplete, onUpdateRemainingSeconds) {
         _onNext = onNext;
         _onPrev = onPrev;
-        _onCompleted = onCompleted;
-        _updateRemainingSeconds = updateRemainingSeconds;
+        _onComplete = onComplete;
+        _onExerciseFirstSideComplete = onExerciseFirstSideComplete;
+        _onUpdateRemainingSeconds = onUpdateRemainingSeconds;
         _exercises = workout.exercises;
-    }(workout, onNext, onPrev, onCompleted, updateRemainingSeconds);
+    }(workout, onNext, onPrev, onComplete, onExerciseFirstSideComplete, onUpdateRemainingSeconds);
 
     return {
         begin: begin,

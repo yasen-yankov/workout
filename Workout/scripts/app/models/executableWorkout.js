@@ -10,8 +10,9 @@ var ExecutableWorkout = function (workout) {
                 name: exercises[i].Name,
                 imageThumbBase64: exercises[i].ImageThumbBase64,
                 imageBase64: exercises[i].ImageBase64,
+                isDualSided: exercises[i].IsDualSided,
                 seconds: exercisesSettings[exercises[i].Id].seconds,
-                isRest : false
+                isRest: false,
             };
             
             _executableExercises.push(_executableExercise);
@@ -31,7 +32,8 @@ var ExecutableWorkout = function (workout) {
                     isRest: true,
                     nextExerciseImageThumbBase64: exercises[i + 1].imageThumbBase64,
                     nextExerciseName: exercises[i + 1].name,
-                    seconds: restInterval
+                    seconds: restInterval,
+                    isDualSided: false
                 };
                 
                 _exercises.push(rest);

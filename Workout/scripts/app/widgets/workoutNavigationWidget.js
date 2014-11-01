@@ -44,23 +44,15 @@
             var _text = self._convertSecondsToText(remainingSeconds);
             self._countdownText.text(_text);
             
-            if (remainingSeconds === totalSeconds) {
-                self._progressBar.stop(true, true);
-                self._progressBar.css('width', '100%');
-            }
-            
-            if (remainingSeconds === 0 || self._paused) {
-                return;
-            }
-            
-            var remainingSecondsPercentage = (remainingSeconds - 1) / totalSeconds * 100;
-            self._progressBar.animate({ width: remainingSecondsPercentage + '%' }, 1000, 'linear');
+            var remainingSecondsPercentage = remainingSeconds / totalSeconds * 100;
+            self._progressBar.css('width', remainingSecondsPercentage + '%');
         },
         
         _setResumeCountdownUI: function () {
             var self = this;
             
             self._countdownText.css("opacity", "1");
+            self._progressBar.css("opacity", "1");
             self._nextBtn.hide();
             self._prevBtn.hide();
         },
@@ -69,6 +61,7 @@
             var self = this;
             
             self._countdownText.css("opacity", "0.3");
+            self._progressBar.css("opacity", "0.3");
             self._nextBtn.show();
             self._prevBtn.show();
         },
