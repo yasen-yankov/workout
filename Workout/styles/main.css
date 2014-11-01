@@ -16,6 +16,10 @@ body, html {
     font-size: x-large;
 }
 
+.u-tac {
+    text-align: center;
+}
+
 .content-stretched {
     left: 0;
     position: absolute;

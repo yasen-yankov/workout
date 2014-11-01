@@ -5,17 +5,19 @@ app.models = app.models || {};
 app.models.workoutInProgress = (function (window) {
     var workoutInProgressViewModel = (function () {
         var _workoutUid,
+            _circuits,
             _executableWorkout,
             _workoutExecutor,
             _exercisesScrollView,
             _exercisesDataSource,
-            _exercisesScrollViewChanging;
+            _exercisesScrollViewChanging,
+            _workoutNavigation;
         
         var init = function (e) {
             _exercisesDataSource = new kendo.data.DataSource();
 
-            var exercisesScrollView = e.view.element.find("#exercises-scroll-view");
-            exercisesScrollView.kendoMobileScrollView({
+            var _exercisesScrollViewElement = e.view.element.find("#exercises-scroll-view");
+            _exercisesScrollViewElement.kendoMobileScrollView({
                 dataSource: _exercisesDataSource,
                 contentHeight: "100%",
                 enablePager: false,
@@ -24,14 +26,28 @@ app.models.workoutInProgress = (function (window) {
                 change: _onExercisesScrollViewChange
             });
 
-            _exercisesScrollView = exercisesScrollView.getKendoMobileScrollView();
+            _exercisesScrollView = _exercisesScrollViewElement.getKendoMobileScrollView();
             _exercisesScrollViewDisableScrolling();
+            
+            var _workoutNavigationElement = e.view.element.find("#workoutNavigation");
+            _workoutNavigationElement.kendoWorkoutNavigation({
+                onNext: _nextExercise,
+                onPrevious: _prevExercise,
+                resumePauseToggleElement: $("#workoutInProgressWrapper"),
+                onResume: _resume,
+                onPause: _pause
+            });
+            
+            _workoutNavigation = _workoutNavigationElement.getKendoWorkoutNavigation();
+            
             
             _initTouchEvents();
         };
 
         var show = function (e) {
             _workoutUid = e.view.params.uid;
+            _circuits = e.view.params.circuits ? e.view.params.circuits : 1;
+            var skipInitialCountdown = e.view.params.skipInitialCountdown;
 
             var workout = app.data.workouts.getByUid(_workoutUid);
             workout = app.extensions.workout.fetchExercises(workout);
@@ -46,29 +62,23 @@ app.models.workoutInProgress = (function (window) {
 
             kendo.bind(e.view.element, workoutInProgressViewModel, kendo.mobile.ui);
             
-            _setResumeWorkoutUI();
+            _workoutNavigation.refresh();
             
-            _doInitialCountdown(function () {
-                _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _updateRemainingSeconds);
+            _workoutExecutor = new WorkoutExecutor(_executableWorkout, _exercisesScrollViewNext, _exercisesScrollViewPrev, _workoutCompleted, _updateRemainingSeconds);
+            
+            if (skipInitialCountdown) {
                 _workoutExecutor.begin();
-            });
+            }
+            else {
+                _doInitialCountdown(function () {
+                    _workoutExecutor.begin();
+                });
+            }
         };
         
         var _initTouchEvents = function () {
-            $("#workoutInProgressWrapper").kendoTouch({
-                touchstart: _workoutInProgressWrapperTapped
-            });
-
-            $("#endWorkoutBtn").kendoTouch({
+            $("#workoutInProgress #endWorkoutBtn").kendoTouch({
                 tap: _endWorkout
-            });
-            
-            $(".next-exercise-btn").kendoTouch({
-                touchstart: _nextExercise
-            });
-            
-            $(".prev-exercise-btn").kendoTouch({
-                touchstart: _prevExercise
             });
         };
 
@@ -145,7 +155,13 @@ app.models.workoutInProgress = (function (window) {
         var _workoutCompleted = function () {
             var transition = "slide:left";
             
-            app.mobileApp.navigate('views/workoutCompleted.html?uid=' + _workoutUid, transition);
+            _circuits--;
+            if (_circuits === 0) {
+                app.mobileApp.navigate('views/workoutCompleted.html?uid=' + _workoutUid, transition);
+            }
+            else {
+                app.mobileApp.navigate('views/circuitCompleted.html?uid=' + _workoutUid + '&circuits=' + _circuits, transition);
+            }
         };
         
         var _nextExercise = function () {
@@ -154,10 +170,6 @@ app.models.workoutInProgress = (function (window) {
             }
             
             _workoutExecutor.next();
-            
-            if (_workoutExecutor.isPaused()) {
-                _setPauseWorkoutUI();
-            }
         };
         
         var _prevExercise = function () {
@@ -166,62 +178,18 @@ app.models.workoutInProgress = (function (window) {
             }
             
             _workoutExecutor.prev();
-            
-            if (_workoutExecutor.isPaused()) {
-                _setPauseWorkoutUI();
-            }
+        };
+        
+        var _resume = function () {
+            _workoutExecutor.resume();
+        };
+        
+        var _pause = function () {
+            _workoutExecutor.pause();
         };
 
         var _updateRemainingSeconds = function (remainingSeconds) {
-            if (remainingSeconds <= 3 && remainingSeconds > 0) {
-                navigator.notification.vibrate(1000);
-            }
-            
-            var minutes = Math.floor(remainingSeconds / 60);
-            var seconds = remainingSeconds - minutes * 60;
-            var secondsString = seconds + "";
-
-            if (secondsString.length < 2) {
-                secondsString = "0" + secondsString;
-            }
-
-            var text = minutes + ":" + secondsString;
-
-            _setExerciseCountDownText(text);
-        }
-
-        var _setExerciseCountDownText = function (text) {
-            $(".count-down-text").text(text);
-        };
-        
-        var _workoutInProgressWrapperTapped = function (e) {
-            if (e.touch.initialTouch.className.indexOf("next-exercise-btn") > -1 ||
-                e.touch.initialTouch.parentElement.className.indexOf("next-exercise-btn") > -1 || 
-                e.touch.initialTouch.className.indexOf("prev-exercise-btn") > -1 ||
-                e.touch.initialTouch.parentElement.className.indexOf("prev-exercise-btn") > -1) {
-                return;
-            }
-            
-            if (_workoutExecutor.isPaused()) {
-                _setResumeWorkoutUI();
-                _workoutExecutor.resume();
-            }
-            else {
-                _setPauseWorkoutUI();
-                _workoutExecutor.pause();
-            }
-        };
-        
-        var _setResumeWorkoutUI = function () {
-            $(".count-down-text").css("opacity", "1");
-            $(".next-exercise-btn").hide();
-            $(".prev-exercise-btn").hide();
-        };
-        
-        var _setPauseWorkoutUI = function () {
-            $(".count-down-text").css("opacity", "0.3");
-            $(".next-exercise-btn").show();
-            $(".prev-exercise-btn").show();
+            _workoutNavigation.setCountdownSeconds(remainingSeconds);
         };
 
         return {

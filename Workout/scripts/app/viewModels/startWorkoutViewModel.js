@@ -2,7 +2,8 @@ var app = app || {};
 app.models = app.models || {};
 
 app.models.startWorkout = (function () {
-    var _workoutUid;
+    var _workoutUid,
+        _circuits;
     
     var startWorkoutViewModel = {
         workoutId: '',
@@ -24,10 +25,13 @@ app.models.startWorkout = (function () {
             }
         }
         
+        _circuits = 3;
+        
         var workout = app.data.workouts.getByUid(_workoutUid);
         
         startWorkoutViewModel.workoutId = workout.Id;
         startWorkoutViewModel.workoutName = workout.Name;
+        startWorkoutViewModel.circuits = _circuits;
         
         kendo.bind(e.view.element, startWorkoutViewModel, kendo.mobile.ui);
     };
@@ -53,7 +57,7 @@ app.models.startWorkout = (function () {
             return;
         }
         
-        app.mobileApp.navigate('views/workoutInProgress.html?uid=' + _workoutUid);
+        app.mobileApp.navigate('views/workoutInProgress.html?uid=' + _workoutUid + '&circuits=' + _circuits);
     };
 
     return {
