@@ -30,6 +30,11 @@ body, html {
     vertical-align: middle;
 }
 
+.text-main {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
 .content-stretched {
     display: -moz-box;
     display: -webkit-box;
@@ -81,6 +86,13 @@ body, html {
     -ms-flex: 1;
 }
 
+.content--flex-2 {
+    flex: 2;
+    -moz-flex: 2;
+    -webkit-flex: 2;
+    -ms-flex: 2;
+}
+
 #workoutNavigation {
     position: absolute;
     left: 0;
@@ -114,14 +126,19 @@ body, html {
 
 .start-workout-btn-holder {
     white-space: nowrap;
-    height: 200px;
     text-align: center;
 }
 
+.start-workout-btn-holder .km-text {
+    display: block;
+    font-weight: bold;
+    font-size: 24px;
+}
+
 .start-workout-btn {
-    display: inline-block;
-    width: 105px;
-    vertical-align: middle;
+    align-self: center;
+    flex: 1;
+    padding: 0 0 20px 0;
 }
 
 .start-workout-btn:active {
@@ -130,7 +147,7 @@ body, html {
 
 .start-workout-btn .km-icon {
     display: inline-block;
-    font-size: 100px;
+    font-size: 130px;
 }
 
 .prev-exercise-btn .km-icon
@@ -268,11 +285,6 @@ body, html {
     overflow: auto;
     margin: 0;
     padding: 0;
-}
-
-.list-view .text-main {
-    text-transform: uppercase;
-    font-weight: bold;
 }
 
 .list-view .km-icon {

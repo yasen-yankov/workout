@@ -5,26 +5,29 @@
             <a class="nav-button nav-button-add hide-text settings-btn-js" data-align="right" data-role="button" data-icon="settings"></a>
         </div>
     </header>
-    <div class="start-workout-btn-holder">
-        <span class="v-aling-helper"></span>
-        <a class="start-workout-btn start-workout-btn-js">
-            <span class="km-icon km-play"></span>
-        </a>
-    </div>
-    <div class="content-stretched u-pa content-stretched-position-bottom u-mb20">
-        <ul class="list-view list-view--border-top start-workout-settings">
-            <li>
-                <a id="selectWorkout">
-                    <span class="km-icon km-stopwatch"></span>
-                    <span class="km-text text-main">Workout</span>
-                    <span id="selectedWorkoutName" data-bind="text: workoutName"></span>
-                </a>
-                <a id="selectNumberOfCircuits">
-                    <span class="km-icon km-refresh"></span>
-                    <span class="km-text text-main">Circuits</span>
-                    <span id="selectedWorkoutName" data-bind="text: circuits"></span>
-                </a>
-            </li>
-        </ul>
+    <div data-role="content" class="flex-direction-vertical">
+        <div class="start-workout-btn-holder content--flex-2 content-stretched flex-direction-horizontal">
+            <span class="v-aling-helper"></span>
+            <a class="start-workout-btn start-workout-btn-js">
+                <span class="km-icon km-play"></span>
+                <span class="km-text">Start workout</span>
+            </a>
+        </div>
+        <div class="content-stretched u-mb20">
+            <ul class="list-view list-view--border-top start-workout-settings">
+                <li>
+                    <a id="selectWorkout">
+                        <span class="km-icon km-stopwatch"></span>
+                        <span class="km-text text-main">Workout</span>
+                        <span id="selectedWorkoutName" data-bind="text: workoutName"></span>
+                    </a>
+                    <a id="selectNumberOfCircuits">
+                        <span class="km-icon km-refresh"></span>
+                        <span class="km-text text-main">Circuits</span>
+                        <span id="selectedWorkoutName" data-bind="text: circuits"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
