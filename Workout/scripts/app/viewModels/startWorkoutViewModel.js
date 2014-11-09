@@ -26,7 +26,8 @@ app.models.startWorkout = (function () {
                 _workoutUid = e.view.params.uid;
             }
         }
-        else {
+        
+        if (_workoutUid) {
             var workout = app.data.workouts.getByUid(_workoutUid);
             
             startWorkoutViewModel.workoutId = workout.Id;
