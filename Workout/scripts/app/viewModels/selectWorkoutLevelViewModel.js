@@ -3,7 +3,9 @@ var app = app || {};
 app.models = app.models || {};
 
 app.models.selectWorkoutLevel = (function () {
-    var selectWorkoutLevelViewModel = {
+    var _circuits,
+        _workoutUid,
+        selectWorkoutLevelViewModel = {
         levelsDataSource: [{
                     circuits: 1,
                     name: "One"
@@ -22,20 +24,64 @@ app.models.selectWorkoutLevel = (function () {
                 },
         ]
     };
-
-    init = function (e) {
-        initTouchEvents(e);
-    };
     
     var initTouchEvents = function (e) {
         e.view.element.find("#levels-list li a").kendoTouch({
-            tap: levelTapped
+            touchstart: _levelTapped
+        });
+        
+        e.view.element.find(".done-btn-js").kendoTouch({
+            touchstart: _doneBtnTapped
         });
     };
     
     show = function (e) {
-        var workoutUid = e.view.params.uid;
-        var workout = app.data.workouts.getByUid(workoutUid);
+        if (e.view.params.uid && e.view.params.uid !== "undefined") {
+            _workoutUid = e.view.params.uid;
+            var workout = app.data.workouts.getByUid(_workoutUid);
+            _setLevelTimesInViewModel(workout);
+        }
+        
+        _circuits = 1;
+        if (e.view.params.circuits && e.view.params.circuits !== "undefined") {
+            _circuits = e.view.params.circuits;
+        }
+        
+        _setSelectedLevelInViewModel(parseInt(_circuits));
+        
+        kendo.bind(e.view.element, selectWorkoutLevelViewModel, kendo.mobile.ui);
+        
+        initTouchEvents(e);
+    };
+    
+    var _levelTapped = function (e) {
+        $("#levels-list li a").each(function(){
+            $(this).removeClass("selected");
+        });
+        
+        $(e.sender.element).addClass("selected");
+        
+        _circuits = e.sender.element.data("circuits");
+    };
+    
+    var _doneBtnTapped = function () {
+        var transition = "slide:right";
+        
+        app.mobileApp.navigate('views/startWorkout.html?uid=' + _workoutUid + '&circuits=' + _circuits, transition);
+    }
+    
+    var _setSelectedLevelInViewModel = function (circuits) {
+        for (i = 0; i < selectWorkoutLevelViewModel.levelsDataSource.length; i++) {
+            if (selectWorkoutLevelViewModel.levelsDataSource[i].circuits === circuits) {
+                selectWorkoutLevelViewModel.levelsDataSource[i].selected = true;
+            }
+            else {
+                selectWorkoutLevelViewModel.levelsDataSource[i].selected = false;
+            }
+        }
+    }
+    
+    var _setLevelTimesInViewModel = function (workout) {
         workout = app.extensions.workout.fetchExercises(workout);
         
         var secondsForOneCircuit = 0;
@@ -53,12 +99,7 @@ app.models.selectWorkoutLevel = (function () {
             var seconds = (circuits * secondsForOneCircuit) + ((circuits - 1) * 30);
             selectWorkoutLevelViewModel.levelsDataSource[i].time = _convertSecondsToText(seconds);
         }
-        
-        kendo.bind(e.view.element, selectWorkoutLevelViewModel, kendo.mobile.ui);
-    };
-    
-    var levelTapped = function (e) {
-    };
+    }
     
     var _convertSecondsToText = function (seconds) {
         var _minutes = Math.floor(seconds / 60);
@@ -75,7 +116,6 @@ app.models.selectWorkoutLevel = (function () {
     }
 
     return {
-        init: init,
         show: show
     };
 }());

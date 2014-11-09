@@ -7,24 +7,39 @@
     </header>
     <div data-role="content" class="flex-direction-vertical">
         <div class="start-workout-btn-holder content--flex-2 content-stretched flex-direction-horizontal">
-            <span class="v-aling-helper"></span>
-            <a class="start-workout-btn start-workout-btn-js">
+            <a class="start-workout-btn content--flex start-workout-btn-js">
                 <span class="km-icon km-play"></span>
                 <span class="km-text">Start workout</span>
             </a>
         </div>
         <div class="content-stretched u-mb20">
-            <ul class="list-view list-view--border-top start-workout-settings">
+            <ul class="list-view list-view--border-bottom bordered-list-view start-workout-settings">
                 <li>
                     <a id="selectWorkout">
-                        <span class="km-icon km-stopwatch"></span>
-                        <span class="km-text text-main">Workout</span>
-                        <span id="selectedWorkoutName" data-bind="text: workoutName"></span>
+                        <div class="fl h-100">
+                            <span class="v-aling-helper"></span>
+                            <span class="km-icon km-stopwatch"></span>
+                            <span class="km-text text-main">Workout</span>
+                        </div>
+                        <div class="fr h-100">
+                            <span class="v-aling-helper"></span>
+                            <span id="selectedWorkoutName" data-bind="text: workoutName"></span>
+                            <span class="km-icon km-next"></span>
+                        </div>
                     </a>
+                </li>
+                <li>
                     <a id="selectNumberOfCircuits">
-                        <span class="km-icon km-refresh"></span>
-                        <span class="km-text text-main">Circuits</span>
-                        <span id="selectedWorkoutName" data-bind="text: circuits"></span>
+                        <div class="fl h-100">
+                            <span class="v-aling-helper"></span>
+                            <span class="km-icon km-refresh"></span>
+                            <span class="km-text text-main">Circuits</span>
+                        </div>
+                        <div class="fr h-100">
+                            <span class="v-aling-helper"></span>
+                            <span id="selectedWorkoutName" data-bind="text: circuits"></span>
+                            <span class="km-icon km-next"></span>
+                        </div>
                     </a>
                 </li>
             </ul>

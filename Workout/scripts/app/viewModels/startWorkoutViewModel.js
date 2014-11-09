@@ -16,21 +16,23 @@ app.models.startWorkout = (function () {
     };
     
     var show = function (e) {
-        if (!_workoutUid) {
-            if (e.view.params.uid) {
-                _workoutUid = e.view.params.uid;
-            }
-            else {
-                return;
-            }
+        _circuits = 1;
+        if (e.view.params.circuits && e.view.params.circuits !== "undefined") {
+            _circuits = e.view.params.circuits;
         }
         
-        _circuits = 2;
-        
-        var workout = app.data.workouts.getByUid(_workoutUid);
-        
-        startWorkoutViewModel.workoutId = workout.Id;
-        startWorkoutViewModel.workoutName = workout.Name;
+        if (!_workoutUid) {
+            if (e.view.params.uid && e.view.params.uid !== "undefined") {
+                _workoutUid = e.view.params.uid;
+            }
+        }
+        else {
+            var workout = app.data.workouts.getByUid(_workoutUid);
+            
+            startWorkoutViewModel.workoutId = workout.Id;
+            startWorkoutViewModel.workoutName = workout.Name;
+        }
+
         startWorkoutViewModel.circuits = _circuits;
         
         kendo.bind(e.view.element, startWorkoutViewModel, kendo.mobile.ui);
@@ -51,7 +53,9 @@ app.models.startWorkout = (function () {
     };
     
     var _selectNumberOfCircuitsTapped = function () {
-        app.mobileApp.navigate('views/selectWorkoutLevel.html?uid=' + _workoutUid + '&circuits=' + _circuits);
+        var transition = "slide:left";
+        
+        app.mobileApp.navigate('views/selectWorkoutLevel.html?uid=' + _workoutUid + '&circuits=' + _circuits, transition);
     };
     
     var _settingsBtnTapped = function () {
