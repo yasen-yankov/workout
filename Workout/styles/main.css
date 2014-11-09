@@ -112,10 +112,16 @@ body, html {
     font-weight: bold;
 }
 
+.start-workout-btn-holder {
+    white-space: nowrap;
+    height: 200px;
+    text-align: center;
+}
+
 .start-workout-btn {
-    display: block;
+    display: inline-block;
     width: 105px;
-    margin: 0 auto;
+    vertical-align: middle;
 }
 
 .start-workout-btn:active {
