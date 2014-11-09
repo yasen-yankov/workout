@@ -44,6 +44,14 @@ app.models.startWorkout = (function () {
         e.view.element.find(".start-workout-btn-js").kendoTouch({
             touchstart: _startWorkoutBtnTapped
         });
+        
+        e.view.element.find("#selectNumberOfCircuits").kendoTouch({
+            touchstart: _selectNumberOfCircuitsTapped
+        });
+    };
+    
+    var _selectNumberOfCircuitsTapped = function () {
+        app.mobileApp.navigate('views/selectWorkoutLevel.html?uid=' + _workoutUid + '&circuits=' + _circuits);
     };
     
     var _settingsBtnTapped = function () {

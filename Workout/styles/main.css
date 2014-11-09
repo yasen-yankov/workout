@@ -24,6 +24,12 @@ body, html {
     position: absolute;
 }
 
+.v-aling-helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
 .content-stretched {
     display: -moz-box;
     display: -webkit-box;
@@ -88,6 +94,7 @@ body, html {
     height: 5px;
     width: 100%;
     background: #4c5356;
+    margin: 10px 0 0 0;
 }
 
 #modalview-countdown {
@@ -139,7 +146,7 @@ body, html {
 }
 
 .rest-header-test {
-    font-size: 50px;
+    font-size: 35px;
     margin: 2em 0;
 }
 
@@ -187,16 +194,32 @@ body, html {
     margin: 0;
 }
 
-.exercise-image {
+.exercise-image-holder {
+    white-space: nowrap;
+    text-align: center;
     height: 250px;
+    margin: 20px;
+}
+
+.exercise-image {
+    vertical-align: middle;
+    max-width: 280px;
+    max-height: 250px;
+}
+
+.exercise-image-thumb-holder {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 80px;
 }
 
 .exercise-image-thumb {
-    width: 48px;
     height: 56px;
 }
 
 #exerciseList li a {
+    height: 67px;
     padding: 5px;
 }
 
@@ -280,10 +303,7 @@ body, html {
 
 #exercises-scroll-view .exercises-details {
     text-align: center;
-}
-
-#exercises-scroll-view .exercise-image {
-    margin: 30px 0 25px 0;
+    white-space: normal;
 }
 
 /* COMMON STYLES*/

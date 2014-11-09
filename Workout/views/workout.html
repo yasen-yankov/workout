@@ -5,7 +5,7 @@
             <a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton">Back</a>
         </div>        
     </header>
-    <div class="content-stretched content-stretched-position-top flex-direction-vertical">
+    <div class="content-stretched content-stretched-position-top flex-direction-vertical u-pa">
         <p class="description" data-bind="text: Description"></p>
         <a id="chooseWorkoutBtn" data-role="button" data-icon="play">Choose workout</a>
         <ul id="exerciseList" class="list-view list-view--border-bottom content--flex" data-template="exercisesTemplate" data-bind="source: Exercises"></ul>
@@ -15,7 +15,9 @@
 <script type="text/x-kendo-template" id="exercisesTemplate">
     <li>
         <a data-uid="#= data.uid #">
-            <img src="data:image/png;base64,#= data.ImageThumbBase64 #" class="exercise-image exercise-image-thumb" />
+            <div class="exercise-image-thumb-holder">
+                <img src="data:image/png;base64,#= data.ImageThumbBase64 #" class="exercise-image-thumb" />
+            </div>
             <span>#: data.Name #</span>
         </a>
     </li>

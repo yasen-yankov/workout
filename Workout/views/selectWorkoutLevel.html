@@ -1,0 +1,18 @@
+<div data-role="view" data-title="Circuits" data-layout="no-footer" data-init="app.models.selectWorkoutLevel.init" data-show="app.models.selectWorkoutLevel.show" data-stretch="true">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton">Done</a>
+        </div>
+    </header>
+    <ul id="levels-list" class="list-view list-view--border-bottom" data-template="levelsTemplate" data-bind="source: levelsDataSource"></ul>
+</div>
+
+<script type="text/x-kendo-template" id="levelsTemplate">
+    <li>
+        <a data-circuits="#= data.circuits #">
+            <span class="km-text">#: data.name #</span>
+            <span class="km-text">#: data.time #</span>
+        </a>
+    </li>
+</script>

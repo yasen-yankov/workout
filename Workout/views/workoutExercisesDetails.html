@@ -10,7 +10,10 @@
 
 <script type="text/x-kendo-template" id="exercisesDetailsTemplate">
     <div class="exercises-details">
-        <img src="data:image/png;base64,#= data.ImageBase64 #" class="exercise-image" />
+        <div class="exercise-image-holder">
+            <span class="v-aling-helper"></span>
+            <img src="data:image/png;base64,#= data.ImageBase64 #" class="exercise-image" />
+        </div>
         <h1>#: data.Name #</h1>
     </div>
 </script>

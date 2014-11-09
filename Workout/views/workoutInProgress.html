@@ -22,7 +22,10 @@
 <script type="text/x-kendo-template" id="workoutInProgressExercisesDetailsTemplate">
     <div class="exercises-details">
         <div style="display: #= data.isRest ? 'none' : '' #">
-            <img src="data:image/png;base64,#= data.imageBase64 #" class="exercise-image" />
+            <div class="exercise-image-holder">
+                <span class="v-aling-helper"></span>
+                <img src="data:image/png;base64,#= data.imageBase64 #" class="exercise-image" />
+            </div>
             <h1>#: data.name #</h1>
         </div>
         <div style="display: #= data.isRest ? '' : 'none' #">
